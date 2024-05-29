@@ -1,0 +1,187 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    background-color: black;
+}
+
+.avatar {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+#container {
+    border: 1px solid white;
+    padding: 2% 2%;
+    box-sizing: border-box;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 5% 40% auto 5%;
+    grid-row-gap: 10px;
+}
+
+#container>div {
+    border: 0px solid white;
+    overflow: hidden;
+}
+
+#container #prfcont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+}
+
+#logo {
+    height: 100%;
+    width: 130px;
+}
+
+#prfcont>div:nth-child(2) img {
+    margin: 0 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+}
+
+#container>div:nth-child(2) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+#container>div:nth-child(3) {
+    color: white;
+}
+
+#container table {
+    margin: 10px 0;
+    border-collapse: collapse;
+    box-sizing: border-box;
+    width: 100%;
+    border: none;
+}
+
+#container table tr {
+    font-size: 16px;
+    border-top: 1px solid rgb(179, 163, 163);
+    border-bottom: 1px solid rgb(139, 136, 136);
+}
+
+#container table tr th {
+    padding: 5px 5px;
+    border: none;
+}
+
+#container table tr td {
+    text-align: center;
+    padding: 10px;
+    border: none;
+
+}
+
+#transNavCont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.greyshade {
+    background-color: gray;
+}
+
+#transNavCont button {
+
+    height: 20px;
+    width: 20px;
+    background-color: white;
+    border-radius: 30px;
+    margin: 0 2px;
+    font-size: 12px;
+}
+
+#scrb-box {
+
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 30px 20px;
+    background-color: black;
+    border-radius: 10px;
+    box-shadow: 0px -7px 189px -35px rgba(255, 99, 255, 1);
+    color: white;
+    text-align: center;
+    box-shadow: 3px -4px 159px -27px rgba(255, 92, 255, 1);
+}
+
+#clsBtn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+#scrb-box>div {
+    margin: 10px;
+}
+
+#sesCountCont {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#sesCountCont>button {
+    width: 45px;
+    height: 45px;
+    border-radius: 100px;
+    padding: 5px;
+    font-size: 30px;
+    font-weight: lighter;
+    color: black;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+#sesCountCont>button :hover {
+    transform: scale(1.16);
+}
+
+#sescount {
+    font-size: 110px;
+}
+
+.subscribeBtn {
+    background-color: white;
+    color: black;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.subscribeBtn:hover {
+    transform: scale(1.04);
+}
+
+#bannerCont {
+    background: rgb(94, 0, 171);
+    background: linear-gradient(90deg, rgba(94, 0, 171, 1) 0%, rgba(113, 0, 116, 1) 35%, rgba(1, 116, 76, 1) 100%);
+    border-radius: 8px;
+    text-align: center;
+}
