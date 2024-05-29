@@ -54,7 +54,7 @@ function SignUp() {
                 console.log(result);
                 console.log(result.user);
                 const actionCodeSettings = {
-                    url: 'http://localhost:3000/',
+                    url: 'https://mindpowvr.netlify.app/',
                     handleCodeInApp: true
                 };
                 toast.success('User created sucessfully', {
