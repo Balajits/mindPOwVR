@@ -8,7 +8,7 @@ const history = {
 
 function PrivateRoute() {
     const userDetails = localStorage.getItem('users');
-    console.log(userDetails);
+    // console.log(userDetails);
 
     if (!userDetails) {
         // not logged in so redirect to login page with the return url

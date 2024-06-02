@@ -10,6 +10,7 @@ import { collection, addDoc, getDocs, doc, setDoc } from "firebase/firestore";
 import PinInput from 'react-pin-input';
 import { ToastContainer, toast } from 'react-toastify';
 import { useLocation, Link } from 'react-router-dom';
+import '../App.css';
 
 function SignUp() {
     const [inputs, setInputs] = useState({
@@ -27,7 +28,7 @@ function SignUp() {
 
 
     function handleChange(e) {
-   
+
         var { name, value } = e.target;
         if (name == 'phoneNumber') {
             value = value.replace(/\D/g, "");
@@ -74,7 +75,12 @@ function SignUp() {
                         email: email,
                         phoneNumber: phoneNumber,
                         pin: pin,
-                        uid: result.user.uid
+                        uid: result.user.uid,
+                        AccountStatus: '',
+                        AvailableSessions: '',
+                        DisableReason: '',
+                        Rating: '',
+                        SessionLog: []
                     });
                     setIsActivationScreen(email);
                     setCpin('');
@@ -112,125 +118,124 @@ function SignUp() {
 
         const { from } = location.state || { from: { pathname: "/" } };
 
-        // }
     }
 
 
     return (
         <>
-            <img src={logo} alt="" className="logo-img" />
-            <div className="container">
-                {!isActivationScreen ? <div id="form">
-                    <h2>Create your account</h2>
-                    <br />
-                    <form name="login" onSubmit={handleSubmit}>
-                        <div className='mt-3'>
-                            <label htmlFor="name">Name</label>
-                            <div>
-                                <input className={` ${submitted && inputs.name == '' ? 'form-control is-invalid' : ''}`} type="text" name='name' id="Name" onChange={handleChange} value={inputs.name} />
+            <div className='auth-bg'>
+                <img src={logo} alt="" className="logo-img" />
+                <div className="container">
+                    {!isActivationScreen ? <div id="form">
+                        <h2>Create your account</h2>
+                        <form name="login" onSubmit={handleSubmit}>
+                            <div className='mt-3'>
+                                <label htmlFor="name">Name</label>
+                                <div>
+                                    <input className={` ${submitted && inputs.name == '' ? 'form-control is-invalid' : ''}`} type="text" name='name' id="Name" onChange={handleChange} value={inputs.name} />
+                                </div>
+                                {submitted && inputs.name == '' && <div className="invalid-feedback d-block">
+                                    Name is required
+                                </div>}
                             </div>
-                            {submitted && inputs.name == '' && <div className="invalid-feedback d-block">
-                                Name is required
-                            </div>}
-                        </div>
-                        <div className='mt-3'>
-                            <label htmlFor="phoneNumber">Phone Number</label>
-                            <div>
-                                <input type="text" maxLength={14} name='phoneNumber' id="phoneNumber" onChange={handleChange} value={inputs.phoneNumber} />
+                            <div className='mt-3'>
+                                <label htmlFor="phoneNumber">Phone Number</label>
+                                <div>
+                                    <input type="text" maxLength={14} name='phoneNumber' id="phoneNumber" onChange={handleChange} value={inputs.phoneNumber} />
+                                </div>
+                                {submitted && inputs.phoneNumber == '' && <div className="invalid-feedback d-block">
+                                    Phone number is required
+                                </div>}
                             </div>
-                            {submitted && inputs.phoneNumber == '' && <div className="invalid-feedback d-block">
-                                Phone number is required
-                            </div>}
-                        </div>
 
-                        <div className='mt-3'>
-                            <label htmlFor="email">Email</label>
-                            <div>
-                                <input type="text" name='email' id="email" onChange={handleChange} value={inputs.email} />
+                            <div className='mt-3'>
+                                <label htmlFor="email">Email</label>
+                                <div>
+                                    <input type="text" name='email' id="email" onChange={handleChange} value={inputs.email} />
+                                </div>
+                                {submitted && inputs.email == '' && <div className="invalid-feedback d-block">
+                                    Email is required
+                                </div>}
+                                {submitted && !validEmail && inputs.email != '' && <div className="invalid-feedback d-block">
+                                    Enter Valid email
+                                </div>}
                             </div>
-                            {submitted && inputs.email == '' && <div className="invalid-feedback d-block">
-                                Email is required
-                            </div>}
-                            {submitted && !validEmail && inputs.email != '' && <div className="invalid-feedback d-block">
-                                Enter Valid email
-                            </div>}
-                        </div>
 
-                        <div className='mt-3'>
-                            <label htmlFor="password">Pin</label>
-                            <PinInput
-                                length={6}
-                                initialValue={pin}
-                                secret
-                                secretDelay={100}
-                                onChange={(value, index) => { setPin(value) }}
-                                type="numeric"
-                                inputMode="number"
-                                style={{}}
-                                inputStyle={{ borderColor: 'white' }}
-                                inputFocusStyle={{ borderColor: 'white' }}
-                                onComplete={(value, index) => { }}
-                                autoSelect={false}
-                                name="password"
-                                regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
-                            />
-                            {submitted && pin == '' && <div className="invalid-feedback d-block">
-                                Pin is required
-                            </div>}
-                            {submitted && pin && pin.length != 6 && <div className="invalid-feedback d-block">
-                                Pin length should be 6
-                            </div>}
-                        </div>
+                            <div className='mt-3'>
+                                <label htmlFor="password">Pin</label>
+                                <PinInput
+                                    length={6}
+                                    initialValue={pin}
+                                    secret
+                                    secretDelay={100}
+                                    onChange={(value, index) => { setPin(value) }}
+                                    type="numeric"
+                                    inputMode="number"
+                                    style={{}}
+                                    inputStyle={{ borderColor: 'white' }}
+                                    inputFocusStyle={{ borderColor: 'white' }}
+                                    onComplete={(value, index) => { }}
+                                    autoSelect={false}
+                                    name="password"
+                                    regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
+                                />
+                                {submitted && pin == '' && <div className="invalid-feedback d-block">
+                                    Pin is required
+                                </div>}
+                                {submitted && pin && pin.length != 6 && <div className="invalid-feedback d-block">
+                                    Pin length should be 6
+                                </div>}
+                            </div>
 
-                        <div className='mt-3'>
-                            <label htmlFor="cpassword">Confirm Password</label>
-                            <PinInput
-                                length={6}
-                                initialValue={cpin}
-                                secret
-                                secretDelay={100}
-                                onChange={(value, index) => { setCpin(value) }}
-                                type="numeric"
-                                inputMode="number"
-                                style={{}}
-                                inputStyle={{ borderColor: 'white' }}
-                                inputFocusStyle={{ borderColor: 'white' }}
-                                onComplete={(value, index) => { }}
-                                autoSelect={false}
-                                name="password"
-                                regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
-                            />
-                            {submitted && cpin == '' && <div className="invalid-feedback d-block">
-                                Confirm Pin is required
-                            </div>}
-                            {submitted && cpin && cpin.length != 6 && <div className="invalid-feedback d-block">
-                                Confirm Pin length should be 6
-                            </div>}
-                            {submitted && pin != cpin && <div className="invalid-feedback d-block">
-                                Pin & Confirm Pin is not matching
-                            </div>}
-                        </div>
-                        <div id="recaptcha-container"></div>
-                        <div className='mt-30'>
-                            <button id="loginBtn" type='submit'>Create Account</button>
-                        </div>
-                        <br />
-                    </form>
+                            <div className='mt-3'>
+                                <label htmlFor="cpassword">Confirm Password</label>
+                                <PinInput
+                                    length={6}
+                                    initialValue={cpin}
+                                    secret
+                                    secretDelay={100}
+                                    onChange={(value, index) => { setCpin(value) }}
+                                    type="numeric"
+                                    inputMode="number"
+                                    style={{}}
+                                    inputStyle={{ borderColor: 'white' }}
+                                    inputFocusStyle={{ borderColor: 'white' }}
+                                    onComplete={(value, index) => { }}
+                                    autoSelect={false}
+                                    name="password"
+                                    regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
+                                />
+                                {submitted && cpin == '' && <div className="invalid-feedback d-block">
+                                    Confirm Pin is required
+                                </div>}
+                                {submitted && cpin && cpin.length != 6 && <div className="invalid-feedback d-block">
+                                    Confirm Pin length should be 6
+                                </div>}
+                                {submitted && pin != cpin && <div className="invalid-feedback d-block">
+                                    Pin & Confirm Pin is not matching
+                                </div>}
+                            </div>
+                            <div id="recaptcha-container"></div>
+                            <div className='mt-30'>
+                                <button id="loginBtn" type='submit'>Create Account</button>
+                            </div>
+                            <br />
+                        </form>
 
 
-                </div> :
-                    <div id="form">
-                        <h2>Activation Mail send to this email address <b>{isActivationScreen}</b> </h2>
-                        <br />
-                        <div className='text-center' >
+                    </div> :
+                        <div id="form">
+                            <h2>Activation Mail send to this email address <b>{isActivationScreen}</b> </h2>
+                            <br />
+                            <div className='text-center' >
 
-                            <Link to="/login" id="crtAcc">Back to Login</Link>
-                        </div>
-                    </div>}
+                                <Link to="/login" id="crtAcc">Back to Login</Link>
+                            </div>
+                        </div>}
 
 
+                </div>
             </div>
-
         </>
     )
 

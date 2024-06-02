@@ -1,4 +1,3 @@
-import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import SignIn from './pages/signIn';
@@ -16,7 +15,6 @@ function App() {
       <ToastContainer />
       <Routes>
         {/* public routes starts */}
-
         <Route path="/login" element={<SignIn />} />
         <Route path="/register" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

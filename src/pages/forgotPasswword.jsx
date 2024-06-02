@@ -8,6 +8,7 @@ import {
 
 import { auth } from '../config/firebaseConfig';
 import { ToastContainer, toast } from 'react-toastify';
+import '../App.css';
 
 function ForgotPassword() {
     const [inputs, setInputs] = useState({
@@ -62,39 +63,40 @@ function ForgotPassword() {
 
     return (
         <>
-            <img src={logo} alt="" className="logo-img" />
-            <div className="container">
-                {!success ? <div id="form">
-                    <h2>Forgot Password</h2>
-                    <br />
-                    <form name="login" onSubmit={handleSubmit}>
-                        <div className='mt-2'>
-                            <label htmlFor="email">Email</label>
-                            <div>
-                                <input type="text" name='email' id="email" onChange={handleChange} value={inputs.email} />
-                            </div>
-                            {submitted && inputs.email == '' && <div className="invalid-feedback d-block">
-                                Email is required
-                            </div>}
-                            {submitted && !validEmail && inputs.email != '' && <div className="invalid-feedback d-block">
-                                Enter Valid email
-                            </div>}
-                        </div>
-                        <div className='mt-30'>
-                            <button id="loginBtn" >Continue</button>
-                        </div>
-                    </form>
-                </div>
-                    : <div id="form">
-                        <h2>Reset password link send to this email address <b>{email}</b> </h2>
+            <div className='auth-bg'>
+                <img src={logo} alt="" className="logo-img" />
+                <div className="container">
+                    {!success ? <div id="form">
+                        <h2>Forgot Password</h2>
                         <br />
-                        <div className='text-center' >
+                        <form name="login" onSubmit={handleSubmit}>
+                            <div className='mt-2'>
+                                <label htmlFor="email">Email</label>
+                                <div>
+                                    <input type="text" name='email' id="email" onChange={handleChange} value={inputs.email} />
+                                </div>
+                                {submitted && inputs.email == '' && <div className="invalid-feedback d-block">
+                                    Email is required
+                                </div>}
+                                {submitted && !validEmail && inputs.email != '' && <div className="invalid-feedback d-block">
+                                    Enter Valid email
+                                </div>}
+                            </div>
+                            <div className='mt-30'>
+                                <button id="loginBtn" >Continue</button>
+                            </div>
+                        </form>
+                    </div>
+                        : <div id="form">
+                            <h2>Reset password link send to this email address <b>{email}</b> </h2>
+                            <br />
+                            <div className='text-center' >
 
-                            <Link to="/login" id="crtAcc">Back to Login</Link>
-                        </div>
-                    </div>}
+                                <Link to="/login" id="crtAcc">Back to Login</Link>
+                            </div>
+                        </div>}
+                </div>
             </div>
-
         </>
     )
 
