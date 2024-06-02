@@ -76,11 +76,11 @@ function SignUp() {
                         phoneNumber: phoneNumber,
                         pin: pin,
                         uid: result.user.uid,
-                        AccountStatus: '',
-                        AvailableSessions: '',
-                        DisableReason: '',
-                        Rating: '',
-                        SessionLog: []
+                        accountStatus: '',
+                        availableSessions: '',
+                        disableReason: '',
+                        rating: '',
+                        sessionLog: []
                     });
                     setIsActivationScreen(email);
                     setCpin('');

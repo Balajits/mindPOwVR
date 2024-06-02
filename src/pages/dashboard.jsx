@@ -18,6 +18,7 @@ function Dashboard() {
     useEffect(() => {
         var user = JSON.parse(localStorage.getItem(("users")));
         getUser(user);
+        getList(user.uid);
     }, []);
 
     async function getUser(user) {
@@ -28,9 +29,7 @@ function Dashboard() {
             setUser(doc.data());
             // console.log(doc.id, " => ", doc.data());
             // getList(doc.id);
-            setTimeout(() => {
-                getList(doc.id);
-            }, 2000);
+           
         });
 
     }
@@ -38,15 +37,16 @@ function Dashboard() {
     const getList = async (id) => {
         console.log(id);
         let uid = 'subscription';
-        const q = query(collection(db, id), where(documentId(), '==', id.toString()))
+        const q = query(collection(db, uid), where(documentId(), '==', id.toString()))
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
             console.log(doc.id, " => ", doc.data());
-            setList(doc.data());
+            // setList(doc.data().list);
         });
 
-        console.log(list);
+        setTimeout(() => {
+            console.log(list)
+        });
     }
 
     function signOut() {
@@ -145,6 +145,9 @@ function Dashboard() {
                                     <th scope="col">Amount</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                {list.length == 0 && <tr className='text-center'> <th colSpan={6}> No records found</th></tr>}
+                            </tbody>
 
                         </table>
                         <div>
