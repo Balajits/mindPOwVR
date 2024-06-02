@@ -5,13 +5,15 @@ import logo from '../assets/images/logo.png';
 import '../dashboard.css';
 import ResponsivePagination from 'react-responsive-pagination';
 import { collection, addDoc, getDoc, query, getDocs, where, doc, setDoc, documentId } from "firebase/firestore";
+import { format } from 'date-fns';
 
 function Dashboard() {
     const navigate = useNavigate();
     const [user, setUser] = useState('')
     const [list, setList] = useState([]);
-    const [currentPage, setCurrentPage] = useState(8);
-    const totalPages = 20;
+    const [pageList, setPageList] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    var totalPages = 0;
     var [count, setCount] = useState(0);
     const [submitted, setSubmitted] = useState(false);
 
@@ -19,6 +21,7 @@ function Dashboard() {
         var user = JSON.parse(localStorage.getItem(("users")));
         getUser(user);
         getList(user.uid);
+        console.log(format(new Date(), 'yyyy-MM-dd'))
     }, []);
 
     async function getUser(user) {
@@ -29,7 +32,7 @@ function Dashboard() {
             setUser(doc.data());
             // console.log(doc.id, " => ", doc.data());
             // getList(doc.id);
-           
+
         });
 
     }
@@ -41,13 +44,20 @@ function Dashboard() {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             console.log(doc.id, " => ", doc.data());
-            // setList(doc.data().list);
+            if (Object.keys(doc.data()).length !== 0 || Array.isArray(doc.data().list)) {
+                console.log('ad', doc.data().list);
+                setList(doc.data().list);
+                // handlePageChange(1);
+            }
         });
 
         setTimeout(() => {
-            console.log(list)
-        });
+            console.log(list);
+            // totalPages = list.length;
+        }, 30);
     }
+
+
 
     function signOut() {
         localStorage.clear();
@@ -69,34 +79,40 @@ function Dashboard() {
         console.log(value);
 
         setCount(value);
-        console.log(count)
+        console.log(count);
     }
 
-    function clear() {
-        // setCount(0);
-        // setSubmitted(false);
+    const clear = () => {
+        setCount(0);
+        setSubmitted(false);
     }
 
     const subscribe = async () => {
         if (count != 0) {
             setSubmitted(true);
+            var data = list;
+            data.push({
+                amount: count * 100,
+                date: format(new Date(), 'yyyy-MM-dd'),
+                noSessions: count,
+                remainingSessions: '',
+                subscriptionName: "VR Session",
+                transactionId: '123',
+                transactionStatus: 'Complete',
+                uid: user.uid
+            })
 
             await setDoc(doc(db, "subscription", user.uid), {
-                list: [
-                    {
-                        amount: count * 100,
-                        date: new Date(),
-                        noSessions: count,
-                        remainingSessions: '',
-                        subscriptionName: "VR Session",
-                        transactionId: '123',
-                        transactionStatus: 'Complete',
-                        uid: user.uid
-                    }
-                ]
+                list: data
             });
 
+            setList(data);
         }
+    }
+
+    function handlePageChange(page) {
+        console.log(page);
+        setCurrentPage(page);
     }
 
     return (
@@ -125,7 +141,7 @@ function Dashboard() {
                             Subscribe for new sessions
                         </div>
                         <div>
-                            <button id="newSubscribe" data-bs-toggle="modal" data-bs-target="#exampleModal" className="subscribeBtn">Subscribe</button>
+                            <button id="newSubscribe" onClick={() => clear()} data-bs-toggle="modal" data-bs-target="#exampleModal" className="subscribeBtn">Subscribe</button>
                         </div>
                     </div>
                 </div>
@@ -145,19 +161,32 @@ function Dashboard() {
                                     <th scope="col">Amount</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody> 
+                                {/* (currentPage - 1) * 5, currentPage * 5 */}
                                 {list.length == 0 && <tr className='text-center'> <th colSpan={6}> No records found</th></tr>}
+                                {list.length != 0 && list.slice((currentPage - 1) * 5, currentPage * 5).map((e, i) => {
+                                    return (
+                                        <tr key={i}>
+                                            <td>{e.subscriptionName}</td>
+                                            <td>{format(e.date, 'yyyy-MM-dd')}</td>
+                                            <td>{e.noSessions} / {e.noSessions}</td>
+                                            <td>{e.transactionId}</td>
+                                            <td>{e.transactionStatus}</td>
+                                            <td>{e.amount}</td>
+                                        </tr>
+                                    )
+                                })}
                             </tbody>
 
                         </table>
-                        <div>
-                            <ResponsivePagination
+                        {list.length != 0 && <div>
+                             <ResponsivePagination
                                 current={currentPage}
-                                total={totalPages}
-                                onPageChange={setCurrentPage}
+                                total={Math.ceil(list.length / 5)}                                
+                                onPageChange={page => handlePageChange(page)}
                             />
 
-                        </div>
+                        </div>}
                     </div>
                 </div>
 
@@ -187,7 +216,7 @@ function Dashboard() {
                             <div className='text-center'>
                                 <p className='m-0'>Total Amount : <i class="bi bi-currency-rupee"></i> <span id="tamt"> {count * 100}</span></p>
                                 {!submitted && <button class="subscribeBtn" id="subscribeBtn" onClick={() => subscribe()}>Subscribe</button>}
-                                {submitted && <button class="subscribeBtn" id="subscribeBtn" data-bs-dismiss="modal" aria-label="Close" onClick={clear()}>Continue</button>}
+                                {submitted && <button class="subscribeBtn" id="subscribeBtn" data-bs-dismiss="modal" aria-label="Close" onClick={() => clear()}>Continue</button>}
                             </div>
                         </div>
                     </div>
