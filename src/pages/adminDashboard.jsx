@@ -67,8 +67,28 @@ function AdminDashboard() {
 
     }
 
+    const changeUserStatus = async (e, i) => {
+        let data = {
+            name: e.name,
+            email: e.email,
+            phoneNumber: e.phoneNumber,
+            pin: e.pin,
+            uid: e.uid,
+            accountStatus: e.accountStatus === 'Active' ? 'InActive' : 'Active',
+            availableSessions: e.availableSessions,
+            disableReason: e.disableReason,
+            rating: e.rating,
+            sessionLog: e.sessionLog
+        }
+        await setDoc(doc(db, "users", e.uid), data, {merge: true});
+        
+        var listData = list;
+        listData[i].user = data;
+        setList([...listData]);
+    }
+
     const userDetailView = (e) => {
-        navigate('/admin-dashboard/user/'+e);
+        navigate('/admin-dashboard/user/' + e);
     }
 
     return (
@@ -93,7 +113,7 @@ function AdminDashboard() {
                 </nav>
 
                 <div className='desktop'>
-                    
+
                     <div className='p-15'>
                         <table className="table table-striped table-dark table-hover">
                             <thead>
@@ -116,7 +136,7 @@ function AdminDashboard() {
                                             <td>{e.list.length} / {e.list.length}</td>
                                             <td>
                                                 <div className="form-check form-switch">
-                                                    <input className="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked={false} />
+                                                    <input className="form-check-input" type="checkbox" id="flexSwitchCheckChecked" onChange={() => changeUserStatus(e.user, i)} checked={e.user.accountStatus == 'Active' ? true : false} />
                                                 </div>
                                             </td>
                                         </tr>

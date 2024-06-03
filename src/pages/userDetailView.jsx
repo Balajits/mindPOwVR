@@ -57,6 +57,27 @@ function UserDetailView() {
         });
     }
 
+    const changeUserStatus = async (e) => {
+        console.log(e.accountStatus);
+        let data = {
+            name: e.name,
+            email: e.email,
+            phoneNumber: e.phoneNumber,
+            pin: e.pin,
+            uid: e.uid,
+            accountStatus: e.accountStatus === 'Active' ? 'InActive' : 'Active',
+            availableSessions: e.availableSessions,
+            disableReason: e.disableReason,
+            rating: e.rating,
+            sessionLog: e.sessionLog
+        }
+        await setDoc(doc(db, "users", e.uid), data, {merge: true});
+        
+        // var listData = list;
+        // listData[i].user = data;
+        setUserData(data);
+    }
+
     return (
         <div className="dashboard">
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -85,7 +106,7 @@ function UserDetailView() {
                         </div>
                         <div className="col-2 m-auto">
                             <div className="form-check form-switch">
-                                <input className="form-check-input" type="checkbox" id="flexSwitchCheckChecked" />
+                                <input className="form-check-input"  onChange={() => changeUserStatus(userData)} checked={userData.accountStatus == 'Active' ? true : false} type="checkbox" id="flexSwitchCheckChecked" />
                             </div>
                         </div>
                     </div>
