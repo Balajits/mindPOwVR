@@ -21,7 +21,6 @@ function Dashboard() {
         var user = JSON.parse(localStorage.getItem(("users")));
         getUser(user);
         getList(user.uid);
-        console.log(format(new Date(), 'yyyy-MM-dd'))
     }, []);
 
     async function getUser(user) {
@@ -50,11 +49,6 @@ function Dashboard() {
                 // handlePageChange(1);
             }
         });
-
-        setTimeout(() => {
-            console.log(list);
-            // totalPages = list.length;
-        }, 30);
     }
 
 
@@ -199,7 +193,7 @@ function Dashboard() {
                 <div className="modal-dialog">
                     <div className="modal-content modal-bg">
                         <div className="modal-header modal-head">
-                            {/* <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> */}
+                            {/* <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> */}
                             <h1 className="modal-title fs-5" id="exampleModalLabel">{!submitted ? 'Subscribe your Mind Power Session' : 'Transcation Completed'}</h1>
 
                         </div>
@@ -214,9 +208,9 @@ function Dashboard() {
                                 </button>
                             </div>}
                             <div className='text-center'>
-                                <p className='m-0'>Total Amount : <i class="bi bi-currency-rupee"></i> <span id="tamt"> {count * 100}</span></p>
-                                {!submitted && <button class="subscribeBtn" id="subscribeBtn" onClick={() => subscribe()}>Subscribe</button>}
-                                {submitted && <button class="subscribeBtn" id="subscribeBtn" data-bs-dismiss="modal" aria-label="Close" onClick={() => clear()}>Continue</button>}
+                                <p className='m-0'>Total Amount : <i className="bi bi-currency-rupee"></i> <span id="tamt"> {count * 100}</span></p>
+                                {!submitted && <button className="subscribeBtn" id="subscribeBtn" onClick={() => subscribe()}>Subscribe</button>}
+                                {submitted && <button className="subscribeBtn" id="subscribeBtn" data-bs-dismiss="modal" aria-label="Close" onClick={() => clear()}>Continue</button>}
                             </div>
                         </div>
                     </div>

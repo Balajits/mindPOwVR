@@ -19,7 +19,20 @@ function PrivateRoute() {
     return <Outlet />;
 }
 
-export { PrivateRoute };
+function PrivateRouteAdmin() {
+    const userDetails = localStorage.getItem('admin');
+    // console.log(userDetails);
+
+    if (!userDetails) {
+        // not logged in so redirect to login page with the return url
+        return <Navigate to="/login" state={{ from: history.location }} />
+    }
+
+    // authorized so return outlet for child routes
+    return <Outlet />;
+}
+
+export { PrivateRoute, PrivateRouteAdmin };
 export default history;
 
 

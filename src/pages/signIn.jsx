@@ -36,22 +36,37 @@ export default function SignIn() {
         setSubmitted(true);
         if (email && pin && pin.length == 6) {
             // get return url from location state or default to home page
-            signInWithEmailAndPassword(auth, email, pin).then((result) => {
-                console.log(result);
-                console.log(result.user);
-                localStorage.setItem('users', JSON.stringify(result.user));
-                if (result.user.emailVerified) {
-                    toast.info('Success', {
-                        theme: 'dark',
-                        position: "top-right",
-                        hideProgressBar: true,
-                        pauseOnHover: false,
-                        draggable: false,
-                        autoClose: 3000,
-                    })
-                    navigate('/');
-                } else {
-                    toast.error('Pls verify email address', {
+            if (email == 'admin@mindpowvr.com' && pin == '123123') {
+                localStorage.setItem('admin', JSON.stringify({'name' :'admin'}));
+                navigate('/admin-dashboard');
+            } else {
+                signInWithEmailAndPassword(auth, email, pin).then((result) => {
+                    console.log(result);
+                    console.log(result.user);
+                    localStorage.setItem('users', JSON.stringify(result.user));
+                    if (result.user.emailVerified) {
+                        toast.info('Success', {
+                            theme: 'dark',
+                            position: "top-right",
+                            hideProgressBar: true,
+                            pauseOnHover: false,
+                            draggable: false,
+                            autoClose: 3000,
+                        })
+                        navigate('/');
+                    } else {
+                        toast.error('Pls verify email address', {
+                            theme: 'dark',
+                            position: "top-right",
+                            hideProgressBar: true,
+                            pauseOnHover: false,
+                            draggable: false,
+                            autoClose: 5000,
+                        })
+                    }
+
+                }).catch((err) => {
+                    toast.error('Incorrect email address or pin', {
                         theme: 'dark',
                         position: "top-right",
                         hideProgressBar: true,
@@ -59,18 +74,8 @@ export default function SignIn() {
                         draggable: false,
                         autoClose: 5000,
                     })
-                }
-
-            }).catch((err) => {
-                toast.error('Incorrect email address or pin', {
-                    theme: 'dark',
-                    position: "top-right",
-                    hideProgressBar: true,
-                    pauseOnHover: false,
-                    draggable: false,
-                    autoClose: 5000,
                 })
-            })
+            }
 
         }
     }

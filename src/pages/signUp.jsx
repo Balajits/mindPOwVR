@@ -76,9 +76,9 @@ function SignUp() {
                         phoneNumber: phoneNumber,
                         pin: pin,
                         uid: result.user.uid,
-                        accountStatus: '',
-                        availableSessions: '',
-                        disableReason: '',
+                        accountStatus: 'Active',
+                        availableSessions: 0,
+                        disableReason: 'Your account has been disabled!',
                         rating: '',
                         sessionLog: []
                     });
