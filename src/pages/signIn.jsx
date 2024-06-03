@@ -86,10 +86,10 @@ export default function SignIn() {
                 <img src={logo} alt="" className="logo-img" />
                 <div className="container">
                     <div id="form">
-                        <h2>Login to your Account</h2>
+                        <h2 className='f-w-b'>Login to your Account</h2>
                         <form name="login" onSubmit={handleSubmit}>
                             <div className='mt-3'>
-                                <label htmlFor="email">Email</label>
+                                <label htmlFor="email" className='f-w-l fs-14'>Email</label>
                                 <div>
                                     <input type="text" name='email' id="email" onChange={handleChange} value={inputs.email} />
                                 </div>
@@ -102,7 +102,7 @@ export default function SignIn() {
                             </div>
 
                             <div className='mt-3'>
-                                <label htmlFor="pin">Pin</label>
+                                <label className='f-w-l fs-14' htmlFor="pin">Pin</label>
                                 <PinInput
                                     length={6}
                                     initialValue={inputs.pin}
@@ -127,25 +127,25 @@ export default function SignIn() {
                                 </div>}
                             </div>
 
-                            <div className="rem-ForgPaswrd-Cont mt-3">
+                            <div className="rem-ForgPaswrd-Cont mt-3 fs-12">
                                 <div>
                                     <input type="checkbox" id="remember" />
-                                    <label htmlFor="remember" id="remLabel">Remember Me</label>
+                                    <label htmlFor="remember" className='f-w-r fs-12' id="remLabel">Remember Me</label>
                                 </div>
 
                                 <div>
-                                    <Link to='forgot-password' className="forgetPasw">Forget Password?</Link>
+                                    <Link to='forgot-password' className="forgetPasw f-w-r">Forgot Password?</Link>
                                 </div>
                             </div>
 
-                            <div className='mt-30'>
+                            <div className='mt-20 fs-18 f-w-b'>
                                 <button id="loginBtn" >Login</button>
                             </div>
                             <br />
                         </form>
-                        <div className='text-center' >
-                            <label htmlFor="crtAcc" id="notreg-label">Not Registered Yet ? </label>
-                            <Link to="/register" id="crtAcc">Create an account</Link>
+                        <div className='text-center fs-18' >
+                            <label htmlFor="crtAcc" className='f-w-r' id="notreg-label">Not Registered Yet ? </label>
+                            <Link to="/register" className='f-w-b' id="crtAcc">Create an account</Link>
                         </div>
 
                     </div>

@@ -6,6 +6,8 @@
     background: url('./assets/images/Frame\ 427319333.png');
     background-position: center;
     background-size: 102% 102%;
+    font-family: "Nunito Sans", sans-serif;
+
 }
 
 .logo-img {
@@ -22,7 +24,7 @@
 
 #form h2 {
     text-align: center;
-    font-size: 30px;
+    font-size: 34px;
 }
 
 #form input[type='text'],
@@ -83,6 +85,10 @@
     margin-top: 30px;
 }
 
+.mt-20 {
+    margin-top: 20px;
+}
+
 /* @media (min-width: 1200px) {
     .container {
         width: 25%;
@@ -121,3 +127,25 @@
         width: 22%;
     }
 } */
+
+.f-w-b {
+    font-weight: bold;
+}
+.f-w-l {
+    font-weight: lighter;
+}
+.f-w-r {
+    font-weight: normal;
+}
+
+.fs-12 {
+    font-size: 12px;
+}
+.fs-14 {
+    font-size: 14px;
+}
+
+.fs-18 {
+    font-size: 18px;
+}
+

@@ -124,6 +124,7 @@ function Dashboard() {
                                 <i className="bi bi-person-circle"></i> {user.name}
                             </button>
                             <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                                <li>{user.email}</li>
                                 <li><a className="dropdown-item active" onClick={signOut} href="">Signout</a></li>
                             </ul>
                         </div>
