@@ -16,10 +16,9 @@
     left: 20px;
 }
 
-.container {
+.container-body {
     color: white;
-    /* border: 1px solid green; */
-    width: 30% !important;
+     /* width: 30% !important; */
 }
 
 #form h2 {
@@ -28,6 +27,7 @@
 }
 
 #form input[type='text'],
+#form input[type='tel'],
 #form input[type='password'] {
     box-sizing: border-box;
     padding: 6px;
@@ -89,7 +89,7 @@
     margin-top: 20px;
 }
 
-/* @media (min-width: 1200px) {
+@media (min-width: 1200px) {
     .container {
         width: 25%;
     }
@@ -126,7 +126,7 @@
     .container {
         width: 22%;
     }
-} */
+}
 
 .f-w-b {
     font-weight: bold;

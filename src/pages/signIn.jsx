@@ -84,7 +84,7 @@ export default function SignIn() {
         <>
             <div className='auth-bg'>
                 <img src={logo} alt="" className="logo-img" />
-                <div className="container">
+                <div className="container-body">
                     <div id="form">
                         <h2 className='f-w-b'>Login to your Account</h2>
                         <form name="login" onSubmit={handleSubmit}>
