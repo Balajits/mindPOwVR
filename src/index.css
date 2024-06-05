@@ -2,3 +2,28 @@ body {
     overflow: auto !important;
     background-color: black !important;
 }
+
+.page-item {
+    margin: 0px 5px;
+}
+
+.page-item .page-link {
+    border-radius: 100% !important;
+    color: #000;
+    background-color: #ddd;
+    padding: 0px 5px;
+}
+
+.page-item:first-child .page-link {
+    border-radius: 100% !important;
+}
+
+.active>.page-link {
+    color: #000 !important;
+    background-color: #fff !important;
+}
+
+.table-dark {
+    --bs-table-color: #fff !important;
+    --bs-table-bg: #000 !important;
+}

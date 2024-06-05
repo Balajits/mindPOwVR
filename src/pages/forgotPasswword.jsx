@@ -65,13 +65,13 @@ function ForgotPassword() {
         <>
             <div className='auth-bg'>
                 <img src={logo} alt="" className="logo-img" />
-                <div className="container">
+                <div className="container-body">
                     {!success ? <div id="form">
-                        <h2>Forgot Password</h2>
+                        <h2 className='f-w-b'>Forgot Password</h2>
                         <br />
                         <form name="login" onSubmit={handleSubmit}>
                             <div className='mt-2'>
-                                <label htmlFor="email">Email</label>
+                                <label htmlFor="email" className='f-w-l fs-14'>Email</label>
                                 <div>
                                     <input type="text" name='email' id="email" onChange={handleChange} value={inputs.email} />
                                 </div>
@@ -82,7 +82,7 @@ function ForgotPassword() {
                                     Enter Valid email
                                 </div>}
                             </div>
-                            <div className='mt-30'>
+                            <div className='mt-20  fs-18 f-w-b'>
                                 <button id="loginBtn" >Continue</button>
                             </div>
                         </form>

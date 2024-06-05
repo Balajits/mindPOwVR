@@ -82,11 +82,8 @@ function UserDetailView() {
         <div className="dashboard">
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div className="container-fluid">
-                    <Link className="navbar-brand" to='/'><img src={logo} alt="" className="nav-logo-img" /></Link>
-                    <div className="collapse navbar-collapse" id="navbarText">
-                    </div>
-                </div>
-                <span className="navbar-text nav-avatar">
+                    <Link className="navbar-brand" to='/admin-dashboard'><img src={logo} alt="" className="nav-logo-img" /></Link>
+                    <span className="navbar-text nav-avatar">
                     <div className="dropdown">
                         <button className="btn btn-secondary dropdown-toggle nav-btn" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
                             <i className="bi bi-person-circle"></i> {user.name}
@@ -96,6 +93,8 @@ function UserDetailView() {
                         </ul>
                     </div>
                 </span>
+                </div>
+                
             </nav>
             <div className='desktop'>
                 <div className='p-3'>
@@ -133,7 +132,8 @@ function UserDetailView() {
                                         <td>{e.subscriptionName}</td>
                                         <td>{format(e.date, 'yyyy-MM-dd')}</td>
                                         <td>{e.noSessions} / {e.noSessions}</td>
-                                        <td>{e.transactionId}</td>
+                                        <td>{e.transactionId} <i role='button' onClick={() => { navigator.clipboard.writeText(e.transactionId) }}
+                                                className="m-0-10 bi bi-copy cursor-pointer"></i></td>
                                         <td>{e.transactionStatus}</td>
                                         <td>{e.amount}</td>
                                     </tr>

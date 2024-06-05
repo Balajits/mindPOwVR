@@ -20,7 +20,7 @@ function App() {
         <Route path="/login" element={<SignIn />} />
         <Route path="/register" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/forgot-password/:token" element={<ForgotPassword />} />
+        {/* <Route path="/forgot-password/:token" element={<ForgotPassword />} /> */}
 
         {/* public routes ends */}
 

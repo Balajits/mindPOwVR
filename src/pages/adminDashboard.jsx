@@ -80,8 +80,8 @@ function AdminDashboard() {
             rating: e.rating,
             sessionLog: e.sessionLog
         }
-        await setDoc(doc(db, "users", e.uid), data, {merge: true});
-        
+        await setDoc(doc(db, "users", e.uid), data, { merge: true });
+
         var listData = list;
         listData[i].user = data;
         setList([...listData]);
@@ -96,20 +96,18 @@ function AdminDashboard() {
             <div className="dashboard">
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                     <div className="container-fluid">
-                        <Link className="navbar-brand" to='/'><img src={logo} alt="" className="nav-logo-img" /></Link>
-                        <div className="collapse navbar-collapse" id="navbarText">
-                        </div>
+                        <Link className="navbar-brand" to='/admin-dashboard'><img src={logo} alt="" className="nav-logo-img" /></Link>
+                        <span className="navbar-text nav-avatar">
+                            <div className="dropdown">
+                                <button className="btn btn-secondary dropdown-toggle nav-btn" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i className="bi bi-person-circle"></i> {user.name}
+                                </button>
+                                <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                                    <li><a className="dropdown-item active" onClick={signOut} href="">Signout</a></li>
+                                </ul>
+                            </div>
+                        </span>
                     </div>
-                    <span className="navbar-text nav-avatar">
-                        <div className="dropdown">
-                            <button className="btn btn-secondary dropdown-toggle nav-btn" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i className="bi bi-person-circle"></i> {user.name}
-                            </button>
-                            <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                                <li><a className="dropdown-item active" onClick={signOut} href="">Signout</a></li>
-                            </ul>
-                        </div>
-                    </span>
                 </nav>
 
                 <div className='desktop'>
@@ -130,7 +128,7 @@ function AdminDashboard() {
                                 {list.length != 0 && list.slice((currentPage - 1) * 5, currentPage * 5).map((e, i) => {
                                     return (
                                         <tr key={i}>
-                                            <td onClick={() => userDetailView(e.user.uid)}>{e.user.name}</td>
+                                            <td i role='button' className='cursor-pointer text-decoration-underline' onClick={() => userDetailView(e.user.uid)}>{e.user.name}</td>
                                             <td>{e.user.phoneNumber}</td>
                                             <td>{e.list.length}</td>
                                             <td>{e.list.length} / {e.list.length}</td>

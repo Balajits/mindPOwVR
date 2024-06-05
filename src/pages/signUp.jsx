@@ -125,12 +125,12 @@ function SignUp() {
         <>
             <div className='auth-bg'>
                 <img src={logo} alt="" className="logo-img" />
-                <div className="container">
+                <div className="container-body"> 
                     {!isActivationScreen ? <div id="form">
-                        <h2>Create your account</h2>
+                        <h2 className='f-w-b'>Create your account</h2>
                         <form name="login" onSubmit={handleSubmit}>
                             <div className='mt-3'>
-                                <label htmlFor="name">Name</label>
+                                <label htmlFor="name" className='f-w-l fs-14'>Name</label>
                                 <div>
                                     <input className={` ${submitted && inputs.name == '' ? 'form-control is-invalid' : ''}`} type="text" name='name' id="Name" onChange={handleChange} value={inputs.name} />
                                 </div>
@@ -139,7 +139,7 @@ function SignUp() {
                                 </div>}
                             </div>
                             <div className='mt-3'>
-                                <label htmlFor="phoneNumber">Phone Number</label>
+                                <label htmlFor="phoneNumber" className='f-w-l fs-14'>Phone Number</label>
                                 <div>
                                     <input type="text" maxLength={14} name='phoneNumber' id="phoneNumber" onChange={handleChange} value={inputs.phoneNumber} />
                                 </div>
@@ -149,7 +149,7 @@ function SignUp() {
                             </div>
 
                             <div className='mt-3'>
-                                <label htmlFor="email">Email</label>
+                                <label htmlFor="email"  className='f-w-l fs-14'>Email</label>
                                 <div>
                                     <input type="text" name='email' id="email" onChange={handleChange} value={inputs.email} />
                                 </div>
@@ -162,7 +162,7 @@ function SignUp() {
                             </div>
 
                             <div className='mt-3'>
-                                <label htmlFor="password">Pin</label>
+                                <label htmlFor="password"  className='f-w-l fs-14'>Pin</label>
                                 <PinInput
                                     length={6}
                                     initialValue={pin}
@@ -188,7 +188,7 @@ function SignUp() {
                             </div>
 
                             <div className='mt-3'>
-                                <label htmlFor="cpassword">Confirm Password</label>
+                                <label htmlFor="cpassword"  className='f-w-l fs-14'>Confirm Password</label>
                                 <PinInput
                                     length={6}
                                     initialValue={cpin}
@@ -216,7 +216,7 @@ function SignUp() {
                                 </div>}
                             </div>
                             <div id="recaptcha-container"></div>
-                            <div className='mt-30'>
+                            <div className='mt-20 fs-18 f-w-b'>
                                 <button id="loginBtn" type='submit'>Create Account</button>
                             </div>
                             <br />

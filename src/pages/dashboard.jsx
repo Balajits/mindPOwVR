@@ -115,10 +115,7 @@ function Dashboard() {
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                     <div className="container-fluid">
                         <Link className="navbar-brand" to='/'><img src={logo} alt="" className="nav-logo-img" /></Link>
-                        <div className="collapse navbar-collapse" id="navbarText">
-                        </div>
-                    </div>
-                    <span className="navbar-text nav-avatar">
+                        <span className="navbar-text nav-avatar">
                         <div className="dropdown">
                             <button className="btn btn-secondary dropdown-toggle nav-btn" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i className="bi bi-person-circle"></i> {user.name}
@@ -129,6 +126,8 @@ function Dashboard() {
                             </ul>
                         </div>
                     </span>
+                    </div>
+                    
                 </nav>
                 <div className="bannerCont">
                     <div>
@@ -145,7 +144,7 @@ function Dashboard() {
                         <h5>Transcation History</h5>
                     </div>
                     <div className='p-15'>
-                        <table className="table table-striped table-dark table-hover">
+                        <table className="table table-dark table-hover">
                             <thead>
                                 <tr className='thead'>
                                     <th scope="col">Subscription</th>
@@ -156,7 +155,7 @@ function Dashboard() {
                                     <th scope="col">Amount</th>
                                 </tr>
                             </thead>
-                            <tbody> 
+                            <tbody>
                                 {/* (currentPage - 1) * 5, currentPage * 5 */}
                                 {list.length == 0 && <tr className='text-center'> <th colSpan={6}> No records found</th></tr>}
                                 {list.length != 0 && list.slice((currentPage - 1) * 5, currentPage * 5).map((e, i) => {
@@ -165,7 +164,8 @@ function Dashboard() {
                                             <td>{e.subscriptionName}</td>
                                             <td>{format(e.date, 'yyyy-MM-dd')}</td>
                                             <td>{e.noSessions} / {e.noSessions}</td>
-                                            <td>{e.transactionId}</td>
+                                            <td>{e.transactionId} <i role='button' onClick={() => { navigator.clipboard.writeText(e.transactionId) }}
+                                                className="m-0-10 bi bi-copy cursor-pointer"></i> </td>
                                             <td>{e.transactionStatus}</td>
                                             <td>{e.amount}</td>
                                         </tr>
@@ -175,9 +175,9 @@ function Dashboard() {
 
                         </table>
                         {list.length != 0 && <div>
-                             <ResponsivePagination
+                            <ResponsivePagination
                                 current={currentPage}
-                                total={Math.ceil(list.length / 5)}                                
+                                total={Math.ceil(list.length / 5)}
                                 onPageChange={page => handlePageChange(page)}
                             />
 
@@ -191,7 +191,7 @@ function Dashboard() {
 
             {/* modal */}
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
+                <div className="modal-dialog m-top">
                     <div className="modal-content modal-bg">
                         <div className="modal-header modal-head">
                             {/* <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> */}
