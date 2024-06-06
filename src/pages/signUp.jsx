@@ -11,6 +11,7 @@ import PinInput from 'react-pin-input';
 import { ToastContainer, toast } from 'react-toastify';
 import { useLocation, Link } from 'react-router-dom';
 import '../App.css';
+import Loader from './loader';
 
 function SignUp() {
     const [inputs, setInputs] = useState({
@@ -25,6 +26,7 @@ function SignUp() {
     const [isActivationScreen, setIsActivationScreen] = useState(null);
     const { name, email, phoneNumber } = inputs;
     const location = useLocation();
+    const [load, setLoad] = useState(false);
 
 
     function handleChange(e) {
@@ -50,10 +52,9 @@ function SignUp() {
         // generateRecaptcha();
         if (name !== '' && phoneNumber !== '' && email !== '' && pin !== '' && cpin !== '' && validEmail && (cpin == pin)) {
             console.log('OK');
+            setLoad(true);
 
             createUserWithEmailAndPassword(auth, email, pin).then((result) => {
-                console.log(result);
-                console.log(result.user);
                 const actionCodeSettings = {
                     url: 'https://mindpowvr.netlify.app/',
                     handleCodeInApp: true
@@ -66,10 +67,9 @@ function SignUp() {
                     draggable: false,
                     autoClose: 5000,
                 });
-
+                setLoad(false);
 
                 sendEmailVerification(result.user, actionCodeSettings).then(async (res) => {
-                    console.log(res);
                     await setDoc(doc(db, "users", result.user.uid), {
                         name: name,
                         email: email,
@@ -93,6 +93,7 @@ function SignUp() {
                     auth.signOut();
                 }).catch((err) => {
                     console.log(err);
+                    setLoad(false);
                     toast.error(err.message, {
                         theme: 'dark',
                         position: "top-right",
@@ -103,6 +104,7 @@ function SignUp() {
                     });
                 })
             }).catch((error) => {
+                setLoad(false);
                 toast.error(error.message, {
                     theme: 'dark',
                     position: "top-right",
@@ -114,18 +116,15 @@ function SignUp() {
             })
         }
 
-
-
-        const { from } = location.state || { from: { pathname: "/" } };
-
     }
 
 
     return (
         <>
+            <Loader isLoad={load} />
             <div className='auth-bg'>
                 <img src={logo} alt="" className="logo-img" />
-                <div className="container-body"> 
+                <div className="container-body">
                     {!isActivationScreen ? <div id="form">
                         <h2 className='f-w-b'>Create your account</h2>
                         <form name="login" onSubmit={handleSubmit}>
@@ -149,7 +148,7 @@ function SignUp() {
                             </div>
 
                             <div className='mt-3'>
-                                <label htmlFor="email"  className='f-w-l fs-14'>Email</label>
+                                <label htmlFor="email" className='f-w-l fs-14'>Email</label>
                                 <div>
                                     <input type="text" name='email' id="email" onChange={handleChange} value={inputs.email} />
                                 </div>
@@ -162,7 +161,7 @@ function SignUp() {
                             </div>
 
                             <div className='mt-3'>
-                                <label htmlFor="password"  className='f-w-l fs-14'>Pin</label>
+                                <label htmlFor="password" className='f-w-l fs-14'>Pin</label>
                                 <PinInput
                                     length={6}
                                     initialValue={pin}
@@ -188,7 +187,7 @@ function SignUp() {
                             </div>
 
                             <div className='mt-3'>
-                                <label htmlFor="cpassword"  className='f-w-l fs-14'>Confirm Password</label>
+                                <label htmlFor="cpassword" className='f-w-l fs-14'>Confirm Password</label>
                                 <PinInput
                                     length={6}
                                     initialValue={cpin}

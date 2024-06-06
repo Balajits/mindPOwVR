@@ -6,7 +6,7 @@ import '../dashboard.css';
 import ResponsivePagination from 'react-responsive-pagination';
 import { collection, addDoc, getDoc, query, getDocs, where, doc, setDoc, documentId } from "firebase/firestore";
 import { format } from 'date-fns';
-import UserDetailView from './userDetailView';
+import Loader from './loader';
 
 function AdminDashboard() {
     var [list, setList] = useState([]);
@@ -15,6 +15,7 @@ function AdminDashboard() {
     const [currentPage, setCurrentPage] = useState(1);
     const [userDetail, setUserDetail] = useState(null);
     const navigate = useNavigate();
+    const [load, setLoad] = useState(false);
 
 
     function signOut() {
@@ -29,6 +30,7 @@ function AdminDashboard() {
     }, []);
 
     const getAllUser = async () => {
+        setLoad(true);
         const q = query(collection(db, "users"));
         const querySnapshot = await getDocs(q);
         var data = [];
@@ -43,10 +45,7 @@ function AdminDashboard() {
                 });
             });
         });
-
-        setTimeout(() => {
-            console.log(list);
-        }, 3000);
+        setLoad(false);
     }
 
     const getList = async (id) => {
@@ -68,6 +67,7 @@ function AdminDashboard() {
     }
 
     const changeUserStatus = async (e, i) => {
+        setLoad(true);
         let data = {
             name: e.name,
             email: e.email,
@@ -85,6 +85,7 @@ function AdminDashboard() {
         var listData = list;
         listData[i].user = data;
         setList([...listData]);
+        setLoad(false);
     }
 
     const userDetailView = (e) => {
@@ -94,6 +95,7 @@ function AdminDashboard() {
 
     return (
         <>
+         <Loader isLoad={load} />
             <div className="dashboard">
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                     <div className="container-fluid">

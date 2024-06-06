@@ -8,6 +8,7 @@ import {
 import { auth } from '../config/firebaseConfig';
 import { ToastContainer, toast } from 'react-toastify';
 import '../App.css';
+import Loader from './loader';
 
 export default function SignIn() {
     const [inputs, setInputs] = useState({
@@ -18,7 +19,8 @@ export default function SignIn() {
     const [validEmail, setValidEmail] = useState(true);
     const { email, pin } = inputs;
     const location = useLocation();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [load, setLoad] = useState(false);
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -35,14 +37,15 @@ export default function SignIn() {
 
         setSubmitted(true);
         if (email && pin && pin.length == 6) {
+            setLoad(true);
             // get return url from location state or default to home page
             if (email == 'admin@mindpowvr.com' && pin == '123123') {
-                localStorage.setItem('admin', JSON.stringify({'name' :'admin'}));
+                localStorage.setItem('admin', JSON.stringify({ 'name': 'admin' }));
+                setLoad(false);
                 navigate('/admin-dashboard');
             } else {
                 signInWithEmailAndPassword(auth, email, pin).then((result) => {
-                    console.log(result);
-                    console.log(result.user);
+
                     localStorage.setItem('users', JSON.stringify(result.user));
                     if (result.user.emailVerified) {
                         toast.info('Success', {
@@ -52,9 +55,11 @@ export default function SignIn() {
                             pauseOnHover: false,
                             draggable: false,
                             autoClose: 3000,
-                        })
+                        });
+                        setLoad(false);
                         navigate('/');
                     } else {
+                        setLoad(false);
                         toast.error('Pls verify email address', {
                             theme: 'dark',
                             position: "top-right",
@@ -64,8 +69,10 @@ export default function SignIn() {
                             autoClose: 5000,
                         })
                     }
+                    setLoad(false);
 
                 }).catch((err) => {
+                    setLoad(false);
                     toast.error('Incorrect email address or pin', {
                         theme: 'dark',
                         position: "top-right",
@@ -82,6 +89,7 @@ export default function SignIn() {
 
     return (
         <>
+            <Loader isLoad={load} />
             <div className='auth-bg'>
                 <img src={logo} alt="" className="logo-img" />
                 <div className="container-body">

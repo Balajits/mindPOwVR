@@ -6,6 +6,7 @@ import '../dashboard.css';
 import ResponsivePagination from 'react-responsive-pagination';
 import { collection, addDoc, getDoc, query, getDocs, where, doc, setDoc, documentId } from "firebase/firestore";
 import { format } from 'date-fns';
+import Loader from './loader';
 
 function Dashboard() {
     const navigate = useNavigate();
@@ -16,6 +17,7 @@ function Dashboard() {
     var totalPages = 0;
     var [count, setCount] = useState(0);
     const [submitted, setSubmitted] = useState(false);
+    const [load, setLoad] = useState(false);
 
     useEffect(() => {
         var user = JSON.parse(localStorage.getItem(("users")));
@@ -37,6 +39,7 @@ function Dashboard() {
     }
 
     const getList = async (id) => {
+        setLoad(true);
         console.log(id);
         let uid = 'subscription';
         const q = query(collection(db, uid), where(documentId(), '==', id.toString()))
@@ -49,6 +52,7 @@ function Dashboard() {
                 // handlePageChange(1);
             }
         });
+        setLoad(false);
     }
 
 
@@ -83,6 +87,8 @@ function Dashboard() {
 
     const subscribe = async () => {
         if (count != 0) {
+            setLoad(true);
+
             setSubmitted(true);
             var data = list;
             data.push({
@@ -101,16 +107,18 @@ function Dashboard() {
             });
 
             setList(data);
+            setLoad(false);
+
         }
     }
 
     function handlePageChange(page) {
-        console.log(page);
         setCurrentPage(page);
     }
 
     return (
         <>
+            <Loader isLoad={load} />
             <div className="dashboard">
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                     <div className="container-fluid">
@@ -178,7 +186,7 @@ function Dashboard() {
                             {list.length == 0 && <div className='col text-center'> No records found</div>}
                             {list.length != 0 && list.slice((currentPage - 1) * 5, currentPage * 5).map((e, i) => {
                                 return (
-                                    <div className='mobile-border'>
+                                    <div className='mobile-border' key={i}>
                                         <div className='row'>
                                             <div className="col-9">
                                                 <div>

@@ -10,13 +10,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import AdminDashboard from './pages/adminDashboard';
 import UserDetailView from './pages/userDetailView';
-import Loader from './pages/loader';
 
 function App() {
   return (
     <BrowserRouter>
       <ToastContainer />
-      {/* <Loader /> */}
       <Routes>
         {/* public routes starts */}
         <Route path="/login" element={<SignIn />} />

@@ -6,6 +6,7 @@ import '../dashboard.css';
 import ResponsivePagination from 'react-responsive-pagination';
 import { collection, addDoc, getDoc, query, getDocs, where, doc, setDoc, documentId } from "firebase/firestore";
 import { format } from 'date-fns';
+import Loader from './loader';
 
 
 function UserDetailView() {
@@ -14,6 +15,7 @@ function UserDetailView() {
     const [user, setUser] = useState('');
     const uid = useParams();
     const [currentPage, setCurrentPage] = useState(1);
+    const [load, setLoad] = useState(false);
 
 
     useEffect(() => {
@@ -45,6 +47,7 @@ function UserDetailView() {
     }
 
     const getList = async (id) => {
+        setLoad(true);
         let uid = 'subscription';
         const q = query(collection(db, uid), where(documentId(), '==', id.toString()))
         const querySnapshot = await getDocs(q);
@@ -55,10 +58,14 @@ function UserDetailView() {
                 setList(doc.data().list);
             }
         });
+        setLoad(false);
+
     }
 
     const changeUserStatus = async (e) => {
         console.log(e.accountStatus);
+        setLoad(true);
+
         let data = {
             name: e.name,
             email: e.email,
@@ -76,10 +83,15 @@ function UserDetailView() {
         // var listData = list;
         // listData[i].user = data;
         setUserData(data);
+        setLoad(false);
+
+        
     }
 
     return (
         <div className="dashboard">
+            <Loader isLoad={load} />
+
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to='/admin-dashboard'><img src={logo} alt="" className="nav-logo-img" /></Link>
@@ -145,35 +157,35 @@ function UserDetailView() {
                     <div className='mobile mb-5'>
                         {list.length == 0 && <div className='col text-center'> No records found</div>}
                         {list.length != 0 && list.slice((currentPage - 1) * 5, currentPage * 5).map((e, i) => {
-                                return (
-                                    <div className='mobile-border' key={i}>
-                                        <div className='row'>
-                                            <div className="col-9">
-                                                <div>
-                                                    <h3 className='d-inline f-w-r fs-20'>{e.subscriptionName} &nbsp;|&nbsp;</h3>
-                                                    <span className='fs-12 fw-100'>{format(e.date, 'yyyy-MM-dd')}</span>
-                                                </div>
-                                            </div>
-                                            <div className="col-3">
-                                                <h2 className='fs-32 f-w-b'>{e.noSessions}/{e.noSessions}</h2>
+                            return (
+                                <div className='mobile-border' key={i}>
+                                    <div className='row'>
+                                        <div className="col-9">
+                                            <div>
+                                                <h3 className='d-inline f-w-r fs-20'>{e.subscriptionName} &nbsp;|&nbsp;</h3>
+                                                <span className='fs-12 fw-100'>{format(e.date, 'yyyy-MM-dd')}</span>
                                             </div>
                                         </div>
-                                        <div className="row my-2">
-                                            <div className="col-9 fs-14 f-w-r">
-                                                {e.transactionId} <i role='button' onClick={() => { navigator.clipboard.writeText(e.transactionId) }}
-                                                    className="m-0-10 bi bi-copy cursor-pointer"></i>
-                                            </div>
-                                            <div className="col-3  fs-14 fw-300">₹&nbsp;{e.amount}</div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col fs-14 fw-300">
-                                                {e.transactionStatus}
-                                            </div>
-
+                                        <div className="col-3">
+                                            <h2 className='fs-32 f-w-b'>{e.noSessions}/{e.noSessions}</h2>
                                         </div>
                                     </div>
-                                )
-                            })}
+                                    <div className="row my-2">
+                                        <div className="col-9 fs-14 f-w-r">
+                                            {e.transactionId} <i role='button' onClick={() => { navigator.clipboard.writeText(e.transactionId) }}
+                                                className="m-0-10 bi bi-copy cursor-pointer"></i>
+                                        </div>
+                                        <div className="col-3  fs-14 fw-300">₹&nbsp;{e.amount}</div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col fs-14 fw-300">
+                                            {e.transactionStatus}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            )
+                        })}
                     </div>
                     {list.length != 0 && <div>
                         <ResponsivePagination

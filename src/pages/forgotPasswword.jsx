@@ -9,6 +9,7 @@ import {
 import { auth } from '../config/firebaseConfig';
 import { ToastContainer, toast } from 'react-toastify';
 import '../App.css';
+import Loader from './loader';
 
 function ForgotPassword() {
     const [inputs, setInputs] = useState({
@@ -22,6 +23,7 @@ function ForgotPassword() {
     const [success, setIsSuccess] = useState(false);
     const { email } = inputs;
     const [validEmail, setValidEmail] = useState(true);
+    const [load, setLoad] = useState(false);
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -42,12 +44,17 @@ function ForgotPassword() {
 
         setSubmitted(true);
         if (email && validEmail) {
+            setLoad(true);
             // get return url from location state or default to home page
             sendPasswordResetEmail(auth, email).then((result) => {
                 console.log(result);
+                setLoad(false);
+
                 setIsSuccess(true);
             }).catch((error) => {
                 console.log(error);
+                setLoad(false);
+
                 toast.error(error.message, {
                     theme: 'dark',
                     position: "top-right",
@@ -63,6 +70,7 @@ function ForgotPassword() {
 
     return (
         <>
+            <Loader isLoad={load} />
             <div className='auth-bg'>
                 <img src={logo} alt="" className="logo-img" />
                 <div className="container-body">
