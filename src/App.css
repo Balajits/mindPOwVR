@@ -124,28 +124,9 @@
 }
 @media (min-width: 1300px) {
     .container {
-        width: 22%;
+        width: 25%;
     }
 }
 
-.f-w-b {
-    font-weight: bold;
-}
-.f-w-l {
-    font-weight: lighter;
-}
-.f-w-r {
-    font-weight: normal;
-}
 
-.fs-12 {
-    font-size: 12px;
-}
-.fs-14 {
-    font-size: 14px;
-}
-
-.fs-18 {
-    font-size: 18px;
-}
 

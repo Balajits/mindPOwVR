@@ -88,6 +88,7 @@ function AdminDashboard() {
     }
 
     const userDetailView = (e) => {
+        console.log('asdadas')
         navigate('/admin-dashboard/user/' + e);
     }
 
@@ -113,7 +114,7 @@ function AdminDashboard() {
                 <div className='desktop'>
 
                     <div className='p-15'>
-                        <table className="table table-striped table-dark table-hover">
+                        <table className="table table-striped table-dark table-hover non-mobile">
                             <thead>
                                 <tr className='thead'>
                                     <th scope="col">User Name</th>
@@ -128,7 +129,7 @@ function AdminDashboard() {
                                 {list.length != 0 && list.slice((currentPage - 1) * 5, currentPage * 5).map((e, i) => {
                                     return (
                                         <tr key={i}>
-                                            <td i role='button' className='cursor-pointer text-decoration-underline' onClick={() => userDetailView(e.user.uid)}>{e.user.name}</td>
+                                            <td role='button' className='cursor-pointer text-decoration-underline' onClick={() => userDetailView(e.user.uid)}>{e.user.name}</td>
                                             <td>{e.user.phoneNumber}</td>
                                             <td>{e.list.length}</td>
                                             <td>{e.list.length} / {e.list.length}</td>
@@ -142,6 +143,39 @@ function AdminDashboard() {
                                 })}
                             </tbody>
                         </table>
+                        <div className='mobile mb-5'>
+                            {list.length == 0 && <div className='col text-center'> No records found</div>}
+                            {list.length != 0 && list.slice((currentPage - 1) * 5, currentPage * 5).map((e, i) => {
+                                return (
+                                    <div className='mobile-border' key={i}>
+                                        <div className='row'>
+                                            <div className="col-9">
+                                                <div>
+                                                    <h3 className='d-inline f-w-r fs-20 cursor-pointer' onClick={() => userDetailView(e.user.uid)}>{e.user.name} &nbsp;|&nbsp;</h3>
+                                                    <span className='fs-12 fw-100'>{e.user.phoneNumber}</span>
+                                                </div>
+                                            </div>
+                                            <div className="col-3">
+                                                <div className="form-check form-switch">
+                                                    <input className="form-check-input" type="checkbox" id="flexSwitchCheckChecked" onChange={() => changeUserStatus(e.user, i)} checked={e.user.accountStatus == 'Active' ? true : false} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="row my-2">
+                                            <div className="col-12 fs-14 f-w-r">
+                                                No. Subscriptions: {e.list.length}
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col fs-14 fw-300">
+                                                No. Sessions: {e.list.length} / {e.list.length}
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>

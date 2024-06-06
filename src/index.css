@@ -27,3 +27,80 @@ body {
     --bs-table-color: #fff !important;
     --bs-table-bg: #000 !important;
 }
+
+.f-w-b {
+    font-weight: bold;
+}
+
+.f-w-l {
+    font-weight: lighter;
+}
+
+.f-w-r {
+    font-weight: normal;
+}
+
+.fs-12 {
+    font-size: 12px;
+}
+
+.fs-14 {
+    font-size: 14px;
+}
+
+.fs-18 {
+    font-size: 18px;
+}
+
+.fs-20 {
+    font-size: 20px;
+}
+
+.fs-32 {
+    font-size: 32px;
+}
+
+.fw-100 {
+    font-weight: 100;
+}
+
+.fw-300 {
+    font-weight: 300;
+}
+
+.loader svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+    z-index: 9999;
+    justify-content: center;
+    text-align: center;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    /* background-color: #000; */
+
+}
+
+.loader {}
+
+.bg-image {
+    /* The image used */
+    background-color: #000;
+
+    /* Add the blur effect */
+    filter: blur(8px);
+    -webkit-filter: blur(1px);
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

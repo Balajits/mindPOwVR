@@ -6,6 +6,7 @@
 .dashboard {
     background-color: #000;
     color: #fff;
+    font-family: "Inter", sans-serif;
 }
 
 .nav-avatar {
@@ -101,7 +102,7 @@
     transition: 0.4s;
     background: none;
 
-    
+
 }
 
 #sesCountCont>button :hover {
@@ -123,12 +124,38 @@
     color: white !important;
     text-align: center;
     box-shadow: 3px -4px 159px -27px rgba(255, 92, 255, 1);
-  }
+}
 
-  .m-0-10 {
+.m-0-10 {
     margin: 0px 10px;
-  }
+}
 
-  .m-top {
-    top:15vh;
-  }
+.m-top {
+    top: 15vh;
+}
+.mobile-border {
+    border-top: 1px solid #fff;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+/* @media (max-width: 576px) {
+    .non-mobile {
+        display: none;
+    }
+} */
+
+@media (max-width: 575px) {
+    .non-mobile {
+        display: none;
+    }
+    .mobile {
+        
+    }
+}
+
+@media (min-width: 576px) {
+    
+    .mobile {
+        display: none;
+    }
+}
