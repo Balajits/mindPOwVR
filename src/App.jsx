@@ -21,7 +21,6 @@ function App() {
         <Route path="/register" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/forgot-password?/:mode/:oobCode" element={<ForgotPassword />} />
-        {/* /?mode=resetPassword&oobCode=1V96GR_oTpYqAG1qKNONwvqhn83hbDBBCP3wfhJ31ZsAAAGQETg4ng&apiKey=AIzaSyB6VUdwpwoITNUWLVkanmVB87PK9lUlBlg&lang=en */}
         {/* public routes ends */}
 
         {/* private routes starts */}
