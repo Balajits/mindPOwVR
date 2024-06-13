@@ -37,7 +37,11 @@ function AdminDashboard() {
         await querySnapshot.forEach(async (doc, i) => {
             await new Promise(async (next) => {
                 await getList(doc.id).then((res) => {
-                    setList(list => [...list, { user: doc.data(), list: res }]);
+                    if (res.length) {
+                        setList(list => [...list, { user: doc.data(), list: res }]);
+                    } else {
+                        setList(list => [...list, { user: doc.data(), list: [] }]);
+                    }                    
                     next();
                 }).catch((err) => {
                     setList(list => [...list, { user: doc.data(), list: [] }]);
@@ -49,19 +53,23 @@ function AdminDashboard() {
     }
 
     const getList = async (id) => {
-        // console.log(id);
-
+       
         return new Promise(async (resolve, reject) => {
             let uid = 'subscription';
             const q = query(collection(db, uid), where(documentId(), '==', id.toString()))
             const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-                if (Object.keys(doc.data()).length !== 0 || Array.isArray(doc.data().list)) {
-                    resolve(doc.data().list);
-                } else {
-                    resolve(null);
-                }
-            });
+            if (querySnapshot.docs.length == 0) {
+                resolve([]);
+            } else {
+                querySnapshot.forEach((doc) => {
+                    if (Object.keys(doc.data()).length !== 0 || Array.isArray(doc.data().list)) {
+                        resolve(doc.data().list);
+                    } else {
+                        resolve([]);
+                    }
+                });
+            }
+            
         })
 
     }
@@ -89,8 +97,10 @@ function AdminDashboard() {
     }
 
     const userDetailView = (e) => {
-        console.log('asdadas')
         navigate('/admin-dashboard/user/' + e);
+    }
+    function handlePageChange(page) {
+        setCurrentPage(page);
     }
 
     return (
@@ -178,6 +188,14 @@ function AdminDashboard() {
                                 )
                             })}
                         </div>
+                        {list.length != 0 && <div>
+                        <ResponsivePagination
+                            current={currentPage}
+                            total={Math.ceil(list.length / 5)}
+                            onPageChange={page => handlePageChange(page)}
+                        />
+
+                    </div>}
                     </div>
                 </div>
             </div>

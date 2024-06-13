@@ -244,7 +244,7 @@ function Dashboard() {
                                 <button type="button" id="decrement" onClick={() => changeCount('sub')}>
                                     <i className="bi bi-dash-circle-fill"></i>
                                 </button>
-                                <h1 id="sescount">{count}</h1>
+                                <h1 id="sescount" className='fs-80'>{count}</h1>
                                 <button type="button" id="increment" onClick={() => changeCount('add')}>
                                     <i className="bi bi-plus-circle-fill"></i>
                                 </button>
@@ -255,6 +255,9 @@ function Dashboard() {
                                 {submitted && <button className="subscribeBtn" id="subscribeBtn" data-bs-dismiss="modal" aria-label="Close" onClick={() => clear()}>Continue</button>}
                             </div>
                         </div>
+                        {/* <div className="modal-botton-bg">
+                        &nbsp; &nbsp; &nbsp; &nbsp;
+                        </div> */}
                     </div>
                 </div>
             </div>

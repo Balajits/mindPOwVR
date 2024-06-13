@@ -14,7 +14,7 @@
 }
 
 .dropdown-menu[data-bs-popper] {
-    left: -75px !important;
+    left: -55px !important;
     padding: 3px;
 }
 
@@ -124,6 +124,13 @@
     color: white !important;
     text-align: center;
     box-shadow: 3px -4px 159px -27px rgba(255, 92, 255, 1);
+     
+}
+
+.modal-botton-bg {
+    background: rgb(94, 0, 171);
+    background: linear-gradient(90deg, rgba(94, 0, 171, 1) 0%, rgba(113, 0, 116, 1) 35%, rgba(1, 116, 76, 1) 100%);
+   
 }
 
 .m-0-10 {

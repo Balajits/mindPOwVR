@@ -68,6 +68,10 @@ body {
     font-weight: 300;
 }
 
+.fs-80 {
+    font-size: 80px;
+}
+
 /* .loader svg {
     position: absolute;
     top: 100;
