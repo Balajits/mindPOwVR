@@ -20,8 +20,10 @@
 
 .dropdown-item.active,
 .dropdown-item:active {
-    background-color: #000 !important;
+    background-color: #fe0202 !important;
     color: #fff !important;
+    border-radius: 7px !important;
+    padding: 5px 10px !important;
 }
 
 .bannerCont {
@@ -124,13 +126,13 @@
     color: white !important;
     text-align: center;
     box-shadow: 3px -4px 159px -27px rgba(255, 92, 255, 1);
-     
+
 }
 
 .modal-botton-bg {
     background: rgb(94, 0, 171);
     background: linear-gradient(90deg, rgba(94, 0, 171, 1) 0%, rgba(113, 0, 116, 1) 35%, rgba(1, 116, 76, 1) 100%);
-   
+
 }
 
 .m-0-10 {
@@ -140,28 +142,53 @@
 .m-top {
     top: 15vh;
 }
+
 .mobile-border {
     border-top: 1px solid #fff;
     padding-top: 15px;
     margin-top: 15px;
 }
+
 /* @media (max-width: 576px) {
     .non-mobile {
         display: none;
     }
 } */
 
+
+
+.signout i {
+    padding: 0px 5px 0px 0px;
+}
+
+.ul-li{
+    border: 1px solid #fff !important; 
+    padding: 5px !important;
+}
+
+.user-btn{
+    background-color: #000 !important;
+    color: #fff !important;
+    border: 0px !important;
+    font-weight: normal !important;
+    text-transform: capitalize;
+    font-size: 15px !important;
+    letter-spacing: 2px;
+}
+
+.bg-black {
+    background-color: #000 !important;
+}
 @media (max-width: 575px) {
     .non-mobile {
         display: none;
     }
-    .mobile {
-        
-    }
+
+    .mobile {}
 }
 
 @media (min-width: 576px) {
-    
+
     .mobile {
         display: none;
     }

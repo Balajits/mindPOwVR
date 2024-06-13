@@ -117,3 +117,9 @@ body {
 .blurred ~ * {
   filter: blur(3px);
 }
+
+.signout {
+    background-color: red !important;
+    border-radius: 7px !important;
+    padding: 5px 10px !important;
+}

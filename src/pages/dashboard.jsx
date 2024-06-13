@@ -120,17 +120,17 @@ function Dashboard() {
         <>
             <Loader isLoad={load} />
             <div className="dashboard">
-                <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                <nav className="navbar navbar-expand-lg navbar-dark bg-dark bg-black">
                     <div className="container-fluid">
                         <Link className="navbar-brand" to='/'><img src={logo} alt="" className="nav-logo-img" /></Link>
                         <span className="navbar-text nav-avatar">
                             <div className="dropdown">
-                                <button className="btn btn-secondary dropdown-toggle nav-btn" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button className="btn btn-secondary dropdown-toggle nav-btn user-btn" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i className="bi bi-person-circle"></i> {user.name}
                                 </button>
-                                <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                                <ul className="dropdown-menu dropdown-menu-dark ul-li" aria-labelledby="dropdownMenuButton2">
                                     <li>{user.email}</li>
-                                    <li><a className="dropdown-item active" onClick={signOut} href="">Signout</a></li>
+                                    <li><a className="dropdown-item active" onClick={signOut} href=""><i className=" bi bi-person-check"></i>Signout</a></li>
                                 </ul>
                             </div>
                         </span>
