@@ -98,7 +98,7 @@ function Dashboard() {
 
             
             var newData = user;
-            newData.availableSessions = newData.availableSessions + count;
+            newData.availableSessions = +newData.availableSessions + count;
             setUser(newData);
             await setDoc(doc(db, "users", user.uid), newData);
             // await setDoc(doc(db, "users", user.uid, newData));
