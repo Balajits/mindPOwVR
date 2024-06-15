@@ -51,7 +51,6 @@ function SignUp() {
         setSubmitted(true);
         // generateRecaptcha();
         if (name !== '' && phoneNumber !== '' && email !== '' && pin !== '' && cpin !== '' && validEmail && (cpin == pin)) {
-            console.log('OK');
             setLoad(true);
 
             createUserWithEmailAndPassword(auth, email, pin).then((result) => {
@@ -92,7 +91,6 @@ function SignUp() {
                     });
                     auth.signOut();
                 }).catch((err) => {
-                    console.log(err);
                     setLoad(false);
                     toast.error(err.message, {
                         theme: 'dark',

@@ -19,7 +19,6 @@ function UserDetailView() {
 
 
     useEffect(() => {
-        console.log(uid.uid);
         var user = JSON.parse(localStorage.getItem(("admin")));
         setUser(user);
         getUser(uid.uid);
@@ -28,7 +27,6 @@ function UserDetailView() {
     }, []);
 
     function handlePageChange(page) {
-        console.log(page);
         setCurrentPage(page);
     }
 
@@ -52,9 +50,7 @@ function UserDetailView() {
         const q = query(collection(db, uid), where(documentId(), '==', id.toString()))
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data());
             if (Object.keys(doc.data()).length !== 0 || Array.isArray(doc.data().list)) {
-                console.log('ad', doc.data().list);
                 setList(doc.data().list);
             }
         });
@@ -63,7 +59,6 @@ function UserDetailView() {
     }
 
     const changeUserStatus = async (e) => {
-        console.log(e.accountStatus);
         setLoad(true);
 
         let data = {

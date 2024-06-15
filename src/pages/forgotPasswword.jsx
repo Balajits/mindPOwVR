@@ -25,6 +25,7 @@ function ForgotPassword() {
 
     const queryParameters = new URLSearchParams(window.location.search)
     const oobCode = queryParameters.get("oobCode");
+    const mode = queryParameters.get("mode");
     const [isVerifyPassword, setIsVerifyPassword] = useState(false);
     const [vSubmitted, setVSubmitted] = useState(false);
     const navigate = useNavigate();
@@ -33,14 +34,15 @@ function ForgotPassword() {
 
     useEffect(() => {
 
-        // console.log(mode)
-        console.log(oobCode);
-        if (oobCode) {
-            setIsVerifyPassword(true);
-            // verifyResetCode();
-
+        if (mode) {
+            if (mode == 'resetPassword' && oobCode) {
+                setIsVerifyPassword(true);
+            } else {
+                navigate('/');
+            }
         }
-    })
+        
+    },[]);
 
     function verifyResetCode(e) {
         e.preventDefault();
@@ -49,7 +51,6 @@ function ForgotPassword() {
 
         if (pin !== '' && cpin !== '' && pin == cpin) {
             confirmPasswordReset(auth, oobCode, cpin).then((res) => {
-                console.log(res);
                 setVSubmitted(false);
                 toast.success('Password changed sucessfully, User will navigate to login screen', {
                     theme: 'dark',
@@ -64,7 +65,6 @@ function ForgotPassword() {
                 }, 3000);
 
             }).catch((err) => {
-                console.log(err);
                 setVSubmitted(false);
                 toast.error(err.message, {
                     theme: 'dark',
@@ -103,12 +103,10 @@ function ForgotPassword() {
             setLoad(true);
             // get return url from location state or default to home page
             sendPasswordResetEmail(auth, email).then((result) => {
-                console.log(result);
                 setLoad(false);
 
                 setIsSuccess(true);
             }).catch((error) => {
-                console.log(error);
                 setLoad(false);
 
                 toast.error(error.message, {
