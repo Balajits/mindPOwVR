@@ -31,7 +31,6 @@ function Dashboard() {
         querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
             setUser(doc.data());
-            // console.log(doc.id, " => ", doc.data());
             // getList(doc.id);
 
         });
@@ -40,16 +39,12 @@ function Dashboard() {
 
     const getList = async (id) => {
         setLoad(true);
-        console.log(id);
         let uid = 'subscription';
         const q = query(collection(db, uid), where(documentId(), '==', id.toString()))
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data());
             if (Object.keys(doc.data()).length !== 0 || Array.isArray(doc.data().list)) {
-                console.log('ad', doc.data().list);
                 setList(doc.data().list);
-                // handlePageChange(1);
             }
         });
         setLoad(false);
@@ -62,22 +57,17 @@ function Dashboard() {
     }
 
     const changeCount = (event) => {
-        console.log(event);
         var value = count;
         if (event == 'add') {
-            console.log(value);
             value += 1;
         } else {
             if (value != 0) {
                 value -= 1;
-                console.log(value);
 
             }
         }
-        console.log(value);
 
         setCount(value);
-        console.log(count);
     }
 
     const clear = () => {
@@ -106,8 +96,15 @@ function Dashboard() {
                 list: data
             });
 
+            
+            var newData = user;
+            newData.availableSessions = newData.availableSessions + count;
+            setUser(newData);
+            await setDoc(doc(db, "users", user.uid), newData);
+            // await setDoc(doc(db, "users", user.uid, newData));
+
             setList(data);
-            setLoad(false);
+            setLoad(false);//availableSessions
 
         }
     }
