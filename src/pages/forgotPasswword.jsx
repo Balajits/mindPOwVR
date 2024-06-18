@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/images/logo.png';
 import PinInput from 'react-pin-input';
 import {
-    sendPasswordResetEmail, confirmPasswordReset
+    sendPasswordResetEmail, confirmPasswordReset, applyActionCode, verifyPasswordResetCode
 } from 'firebase/auth';
 
 import { auth } from '../config/firebaseConfig';
@@ -38,11 +38,36 @@ function ForgotPassword() {
             if (mode == 'resetPassword' && oobCode) {
                 setIsVerifyPassword(true);
             } else {
-                navigate('/');
+                setLoad(true);
+                applyActionCode(auth, oobCode).then((res) => {
+                    setLoad(false);
+                    toast.success('Email verified sucessfully, User will navigate to login screen', {
+                        theme: 'dark',
+                        position: "top-right",
+                        hideProgressBar: true,
+                        pauseOnHover: false,
+                        draggable: false,
+                        autoClose: 3000,
+                    });
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 3000);
+                }).catch((err) => {
+                    setLoad(false);
+                    toast.error(err.message, {
+                        theme: 'dark',
+                        position: "top-right",
+                        hideProgressBar: true,
+                        pauseOnHover: false,
+                        draggable: false,
+                        autoClose: 5000,
+                    });
+                })
+
             }
         }
-        
-    },[]);
+
+    }, []);
 
     function verifyResetCode(e) {
         e.preventDefault();
@@ -50,8 +75,10 @@ function ForgotPassword() {
         setVSubmitted(true);
 
         if (pin !== '' && cpin !== '' && pin == cpin) {
+            setLoad(true);
             confirmPasswordReset(auth, oobCode, cpin).then((res) => {
                 setVSubmitted(false);
+                setLoad(false);
                 toast.success('Password changed sucessfully, User will navigate to login screen', {
                     theme: 'dark',
                     position: "top-right",
@@ -66,6 +93,7 @@ function ForgotPassword() {
 
             }).catch((err) => {
                 setVSubmitted(false);
+                setLoad(false);
                 toast.error(err.message, {
                     theme: 'dark',
                     position: "top-right",
@@ -176,7 +204,7 @@ function ForgotPassword() {
                                 inputMode="number"
                                 style={{}}
                                 inputStyle={{ borderColor: 'white', color: '#fff' }}
-                                inputFocusStyle={{ borderColor: 'white', color: '#fff'  }}
+                                inputFocusStyle={{ borderColor: 'white', color: '#fff' }}
                                 onComplete={(value, index) => { }}
                                 autoSelect={false}
                                 name="password"
@@ -200,8 +228,8 @@ function ForgotPassword() {
                                 type="numeric"
                                 inputMode="number"
                                 style={{}}
-                                inputStyle={{ borderColor: 'white', color: '#fff'  }}
-                                inputFocusStyle={{ borderColor: 'white', color: '#fff'  }}
+                                inputStyle={{ borderColor: 'white', color: '#fff' }}
+                                inputFocusStyle={{ borderColor: 'white', color: '#fff' }}
                                 onComplete={(value, index) => { }}
                                 autoSelect={false}
                                 name="password"
