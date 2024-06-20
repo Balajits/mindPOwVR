@@ -24,7 +24,7 @@ export default function SignIn() {
 
     function handleChange(e) {
         const { name, value } = e.target;
-        setInputs(inputs => ({ ...inputs, [name]: value }));
+        setInputs(inputs => ({ ...inputs, [name]: value.replace(/\s/g,'') }));
         if (email != '') {
             let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             emailRegex.test(email) ? setValidEmail(true) : setValidEmail(false);
@@ -95,7 +95,7 @@ export default function SignIn() {
                 <div className="container-body">
                     <div id="form">
                         <h2 className='f-w-b'>Login to your Account</h2>
-                        <form name="login" onSubmit={handleSubmit}>
+                        <form autoComplete="off" name="login" onSubmit={handleSubmit}>
                             <div className='mt-3'>
                                 <label htmlFor="email" className='f-w-l fs-14'>Email</label>
                                 <div>

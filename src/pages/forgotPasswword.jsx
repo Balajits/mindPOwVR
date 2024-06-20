@@ -111,7 +111,7 @@ function ForgotPassword() {
 
     function handleChange(e) {
         const { name, value } = e.target;
-        setInputs(inputs => ({ ...inputs, [name]: value }));
+        setInputs(inputs => ({ ...inputs, [name]: value.replace(/\s/g,'') }));
         if (email !== '') {
             let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             emailRegex.test(email) ? setValidEmail(true) : setValidEmail(false);
@@ -149,6 +149,9 @@ function ForgotPassword() {
 
         }
     }
+    if (mode && !isVerifyPassword) {
+        return <><div className='auth-bg'></div></>
+    }
 
     return (
         <>
@@ -159,7 +162,7 @@ function ForgotPassword() {
                     {!success ? <div id="form">
                         <h2 className='f-w-b'>Forgot Password</h2>
                         <br />
-                        <form name="login" onSubmit={handleSubmit}>
+                        <form autoComplete='off' name="login" onSubmit={handleSubmit}>
                             <div className='mt-2'>
                                 <label htmlFor="email" className='f-w-l fs-14'>Email</label>
                                 <div>
@@ -191,7 +194,7 @@ function ForgotPassword() {
                 <div className="container-body">
                     <h2 className='f-w-b'>Create new password</h2>
                     <br />
-                    <form name="login" onSubmit={verifyResetCode}>
+                    <form autoComplete='off' name="pass" onSubmit={verifyResetCode}>
                         <div className='mt-3'>
                             <label htmlFor="password" className='f-w-l fs-14 my-2'>Create a new 6 digit code</label>
                             <PinInput
