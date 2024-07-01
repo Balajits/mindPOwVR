@@ -7,6 +7,7 @@ import ResponsivePagination from 'react-responsive-pagination';
 import { collection, addDoc, getDoc, query, getDocs, where, doc, setDoc, documentId } from "firebase/firestore";
 import { format } from 'date-fns';
 import Loader from './loader';
+import Footer from './footer';
 
 function AdminDashboard() {
     var [list, setList] = useState([]);
@@ -199,6 +200,7 @@ function AdminDashboard() {
                     </div>
                 </div>
             </div>
+            <Footer />
         </>
     )
 

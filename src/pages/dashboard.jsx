@@ -7,6 +7,7 @@ import ResponsivePagination from 'react-responsive-pagination';
 import { collection, addDoc, getDoc, query, getDocs, where, doc, setDoc, documentId } from "firebase/firestore";
 import { format } from 'date-fns';
 import Loader from './loader';
+import Footer from './footer';
 
 function Dashboard() {
     const navigate = useNavigate();
@@ -96,7 +97,7 @@ function Dashboard() {
                 list: data
             });
 
-            
+
             var newData = user;
             newData.availableSessions = +newData.availableSessions + count;
             setUser(newData);
@@ -258,6 +259,9 @@ function Dashboard() {
                     </div>
                 </div>
             </div>
+
+
+            <Footer />
 
 
         </>
