@@ -10,15 +10,25 @@ body {
 .page-item .page-link {
     border-radius: 100% !important;
     color: #000;
-    background-color: #ddd;
-    padding: 3px 9px;
+    background-color: #fff !important;
+    padding: 3px 12px;
     font-weight: bold;
     font-family: "Urbanist", sans-serif;
     font-size: 15px;
 }
 
+.page-link {
+    background-color: #9E9E9E;
+}
+
 .page-item:first-child .page-link {
     border-radius: 100% !important;
+}
+
+.disabled>.page-link,
+.page-link.disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
 }
 
 .active>.page-link {
@@ -114,12 +124,13 @@ body {
 }
 
 .loader_parent.blurred {
-  display: block;
+    display: block;
 }
 
-.blurred ~ * {
-  filter: blur(3px);
+.blurred~* {
+    filter: blur(3px);
 }
+
 .f-white {
     color: #fff;
 }
