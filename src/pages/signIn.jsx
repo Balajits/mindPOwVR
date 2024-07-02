@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
-import logo from '../assets/images/logo.png';
+import logo from '../assets/images/logo2.png';
 import PinInput from 'react-pin-input';
 import {
     signInWithEmailAndPassword
@@ -9,6 +9,7 @@ import { auth } from '../config/firebaseConfig';
 import { toast } from 'react-toastify';
 import '../App.css';
 import Loader from './loader';
+import Footer from './footer';
 
 export default function SignIn() {
     const [inputs, setInputs] = useState({
@@ -47,8 +48,8 @@ export default function SignIn() {
         if (email && pin && pin.length == 6) {
             setLoad(true);
             if (rememberMe) {
-                localStorage.setItem('myapp-email',email);
-                localStorage.setItem('myapp-pin',pin);
+                localStorage.setItem('myapp-email', email);
+                localStorage.setItem('myapp-pin', pin);
             } else {
                 localStorage.removeItem('myapp-email');
                 localStorage.removeItem('myapp-pin');
@@ -154,7 +155,7 @@ export default function SignIn() {
 
                             <div className="rem-ForgPaswrd-Cont mt-3 fs-12">
                                 <div>
-                                    <input checked={rememberMe} onChange={e => {setRememberMe(e.target.checked)}} type="checkbox" id="remember" />
+                                    <input checked={rememberMe} onChange={e => { setRememberMe(e.target.checked) }} type="checkbox" id="remember" />
                                     <label htmlFor="remember" className='f-w-r fs-12' id="remLabel">Remember Me</label>
                                 </div>
 
@@ -174,9 +175,12 @@ export default function SignIn() {
                         </div>
 
                     </div>
-
+                    <div className='mt-5'><Footer /></div>
                 </div>
+
+
             </div>
+
         </>
     )
 }

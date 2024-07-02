@@ -1,10 +1,10 @@
 import { react, useEffect, useState } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { auth, db } from '../config/firebaseConfig';
-import logo from '../assets/images/logo.png';
+import logo from '../assets/images/logo2.png';
 import '../dashboard.css';
 import ResponsivePagination from 'react-responsive-pagination';
-import { collection, addDoc, getDoc, query, getDocs, where, doc, setDoc, documentId } from "firebase/firestore";
+import { collection, query, getDocs, where, doc, setDoc, documentId } from "firebase/firestore";
 import { format } from 'date-fns';
 import Loader from './loader';
 import Footer from './footer';
@@ -48,7 +48,7 @@ function Dashboard() {
         querySnapshot.forEach((doc) => {
             if (Object.keys(doc.data()).length !== 0 || Array.isArray(doc.data().list)) {
                 // console.log(doc.data().list);
-                setList(doc.data().list);
+                setList(doc.data().list.reverse());
             }
         });
         setLoad(false);
@@ -85,7 +85,7 @@ function Dashboard() {
 
             setSubmitted(true);
             var data = list;
-            data.push({
+            data.unshift({
                 amount: count * 100,
                 date: format(new Date(), 'yyyy-MM-dd'),
                 noSessions: count,
@@ -105,10 +105,10 @@ function Dashboard() {
             newData.availableSessions = +newData.availableSessions + count;
             setUser(newData);
             await setDoc(doc(db, "users", user.uid), newData);
-            // await setDoc(doc(db, "users", user.uid, newData));
+            setIsSubscribe(true);
 
             setList(data);
-            setLoad(false);//availableSessions
+            setLoad(false);
 
         }
     }
@@ -174,7 +174,7 @@ function Dashboard() {
                                         <tr key={i}>
                                             <td>{e.subscriptionName}</td>
                                             <td>{format(e.date, 'yyyy-MM-dd')}</td>
-                                            <td>{user.availableSessions} / {e.noSessions}</td>
+                                            <td>{i == 0 ? user.availableSessions : 0} / {e.noSessions}</td>
                                             <td>{e.transactionId} <i role='button' onClick={() => {
                                                 toast('Copied', {
                                                     theme: 'dark',

@@ -1,7 +1,14 @@
-import react from 'react';
+import react, { useEffect, useState } from 'react';
 
 
 function Footer() {
+    const [isAuth, setIsAuth] = useState(false);
+
+    useEffect(() => {
+        if (localStorage.getItem('users') || localStorage.getItem('admin')) {
+            setIsAuth(true);
+        }
+    }, [])
     return (
         <footer className="footer mt-auto py-1 bg-none text-center">
             <div className="container fs-15 f-w-l f-white">

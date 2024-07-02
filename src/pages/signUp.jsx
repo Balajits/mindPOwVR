@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import logo from '../assets/images/logo.png';
+import logo from '../assets/images/logo2.png';
 import { auth, db } from '../config/firebaseConfig';
 import {
     createUserWithEmailAndPassword,
@@ -12,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useLocation, Link } from 'react-router-dom';
 import '../App.css';
 import Loader from './loader';
+import Footer from './footer';
 
 function SignUp() {
     const [inputs, setInputs] = useState({
@@ -230,8 +231,9 @@ function SignUp() {
                             </div>
                         </div>}
 
-
+                        <Footer />
                 </div>
+                
             </div>
         </>
     )

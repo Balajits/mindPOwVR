@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '../assets/images/logo.png';
+import logo from '../assets/images/logo2.png';
 import PinInput from 'react-pin-input';
 import {
     sendPasswordResetEmail, confirmPasswordReset, applyActionCode, verifyPasswordResetCode
@@ -118,8 +118,8 @@ function ForgotPassword() {
         }
     }
     useEffect(() => {
-        localStorage.remove('users');
-        localStorage.remove('admin');
+        localStorage.removeItem('users');
+        localStorage.removeItem('admin');
         auth.signOut();
     }, []);
 
