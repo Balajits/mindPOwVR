@@ -29,6 +29,8 @@ body {
 .page-link.disabled {
     cursor: not-allowed;
     pointer-events: all !important;
+    background-color: gray !important;
+    border: 0px !important;
 }
 
 .active>.page-link {

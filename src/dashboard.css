@@ -57,7 +57,7 @@
 .subscribeBtn[disabled] {
     cursor: not-allowed;
   pointer-events: all !important;
-    background-color: #cccccc;
+    background-color: gray;
 }
 
 .bannerCont {
