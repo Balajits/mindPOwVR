@@ -20,7 +20,7 @@ function AdminDashboard() {
 
 
     function signOut() {
-        localStorage.clear();
+        localStorage.removeItem('admin');
     }
 
 
@@ -101,14 +101,26 @@ function AdminDashboard() {
         navigate('/admin-dashboard/user/' + e);
     }
     function handlePageChange(page) {
+        setLoad(true);
         setCurrentPage(page);
+        setLoad(false);
+    }
+
+    function getTotalSessions(h) {
+        console.log(h);
+        let hv = 0;
+        h.forEach((v) => {
+            hv += +v.noSessions;
+        })
+        return hv;
+        
     }
 
     return (
         <>
          <Loader isLoad={load} />
             <div className="dashboard">
-                <nav className="navbar navbar-expand-lg navbar-dark bg-dark bg-black">
+                <nav className="navbar navbar-expand-lg navbar-dark bg-dark bg-black p-0">
                     <div className="container-fluid">
                         <Link className="navbar-brand" to='/admin-dashboard'><img src={logo} alt="" className="nav-logo-img" /></Link>
                         <span className="navbar-text nav-avatar">
@@ -145,7 +157,7 @@ function AdminDashboard() {
                                             <td role='button' className='cursor-pointer text-decoration-underline' onClick={() => userDetailView(e.user.uid)}>{e.user.name}</td>
                                             <td>{e.user.phoneNumber}</td>
                                             <td>{e.list.length}</td>
-                                            <td>{e.list.length} / {e.list.length}</td>
+                                            <td>{e.user.availableSessions} / {getTotalSessions(e.list)}</td>
                                             <td>
                                                 <div className="form-check form-switch">
                                                     <input className="form-check-input" type="checkbox" id="flexSwitchCheckChecked" onChange={() => changeUserStatus(e.user, i)} checked={e.user.accountStatus == 'Active' ? true : false} />
@@ -181,7 +193,7 @@ function AdminDashboard() {
                                         </div>
                                         <div className="row">
                                             <div className="col fs-14 fw-300">
-                                                No. Sessions: {e.list.length} / {e.list.length}
+                                                No. Sessions: {e.user.availableSessions} / {getTotalSessions(e.list)}
                                             </div>
 
                                         </div>

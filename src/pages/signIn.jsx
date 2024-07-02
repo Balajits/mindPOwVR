@@ -6,14 +6,14 @@ import {
     signInWithEmailAndPassword
 } from 'firebase/auth';
 import { auth } from '../config/firebaseConfig';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import '../App.css';
 import Loader from './loader';
 
 export default function SignIn() {
     const [inputs, setInputs] = useState({
-        email: '',
-        pin: ''
+        email: localStorage.getItem("myapp-email") || "",
+        pin: localStorage.getItem("myapp-pin") || ""
     });
     const [submitted, setSubmitted] = useState(false);
     const [validEmail, setValidEmail] = useState(true);
@@ -21,10 +21,18 @@ export default function SignIn() {
     const location = useLocation();
     const navigate = useNavigate();
     const [load, setLoad] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
+
+
+    useEffect(() => {
+        if (localStorage.getItem("myapp-email") && localStorage.getItem("myapp-pin")) {
+            setRememberMe(true);
+        }
+    }, []);
 
     function handleChange(e) {
         const { name, value } = e.target;
-        setInputs(inputs => ({ ...inputs, [name]: value.replace(/\s/g,'') }));
+        setInputs(inputs => ({ ...inputs, [name]: value.replace(/\s/g, '') }));
         if (email != '') {
             let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             emailRegex.test(email) ? setValidEmail(true) : setValidEmail(false);
@@ -38,15 +46,24 @@ export default function SignIn() {
         setSubmitted(true);
         if (email && pin && pin.length == 6) {
             setLoad(true);
+            if (rememberMe) {
+                localStorage.setItem('myapp-email',email);
+                localStorage.setItem('myapp-pin',pin);
+            } else {
+                localStorage.removeItem('myapp-email');
+                localStorage.removeItem('myapp-pin');
+            }
             // get return url from location state or default to home page
-            if (email == 'admin@mindpowvr.com' && pin == '123123') {
+            if (email.toLowerCase() == 'admin@mindpowvr.com' && pin == '123123') {
                 localStorage.setItem('admin', JSON.stringify({ 'name': 'admin' }));
+                localStorage.removeItem('users');
                 setLoad(false);
                 navigate('/admin-dashboard');
             } else {
                 signInWithEmailAndPassword(auth, email, pin).then((result) => {
 
                     localStorage.setItem('users', JSON.stringify(result.user));
+                    localStorage.removeItem('admin');
                     if (result.user.emailVerified) {
                         toast.info('Success', {
                             theme: 'dark',
@@ -137,7 +154,7 @@ export default function SignIn() {
 
                             <div className="rem-ForgPaswrd-Cont mt-3 fs-12">
                                 <div>
-                                    <input type="checkbox" id="remember" />
+                                    <input checked={rememberMe} onChange={e => {setRememberMe(e.target.checked)}} type="checkbox" id="remember" />
                                     <label htmlFor="remember" className='f-w-r fs-12' id="remLabel">Remember Me</label>
                                 </div>
 

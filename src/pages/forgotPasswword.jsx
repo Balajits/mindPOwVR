@@ -118,7 +118,8 @@ function ForgotPassword() {
         }
     }
     useEffect(() => {
-        localStorage.clear();
+        localStorage.remove('users');
+        localStorage.remove('admin');
         auth.signOut();
     }, []);
 

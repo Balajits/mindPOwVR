@@ -8,12 +8,13 @@ import { collection, addDoc, getDoc, query, getDocs, where, doc, setDoc, documen
 import { format } from 'date-fns';
 import Loader from './loader';
 import Footer from './footer';
+import { toast } from 'react-toastify';
 
 function Dashboard() {
     const navigate = useNavigate();
     const [user, setUser] = useState('')
     const [list, setList] = useState([]);
-    const [pageList, setPageList] = useState([]);
+    const [isSubscribe, setIsSubscribe] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     var totalPages = 0;
     var [count, setCount] = useState(0);
@@ -30,9 +31,10 @@ function Dashboard() {
         const q = query(collection(db, "users"), where("uid", "==", user.uid))
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
             setUser(doc.data());
-            // getList(doc.id);
+            if (doc.data().availableSessions == 0) {
+                setIsSubscribe(false);
+            }
 
         });
 
@@ -45,6 +47,7 @@ function Dashboard() {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             if (Object.keys(doc.data()).length !== 0 || Array.isArray(doc.data().list)) {
+                // console.log(doc.data().list);
                 setList(doc.data().list);
             }
         });
@@ -54,7 +57,7 @@ function Dashboard() {
 
 
     function signOut() {
-        localStorage.clear();
+        localStorage.removeItem('users');
     }
 
     const changeCount = (event) => {
@@ -111,14 +114,16 @@ function Dashboard() {
     }
 
     function handlePageChange(page) {
+        setLoad(true);
         setCurrentPage(page);
+        setLoad(false);
     }
 
     return (
         <>
             <Loader isLoad={load} />
             <div className="dashboard">
-                <nav className="navbar navbar-expand-lg navbar-dark bg-dark bg-black">
+                <nav className="navbar navbar-expand-lg navbar-dark bg-dark bg-black p-0">
                     <div className="container-fluid">
                         <Link className="navbar-brand" to='/'><img src={logo} alt="" className="nav-logo-img" /></Link>
                         <span className="navbar-text nav-avatar">
@@ -141,7 +146,7 @@ function Dashboard() {
                             Subscribe for new sessions
                         </div>
                         <div>
-                            <button id="newSubscribe" onClick={() => clear()} data-bs-toggle="modal" data-bs-target="#exampleModal" className="subscribeBtn">Subscribe</button>
+                            <button disabled={isSubscribe} id="newSubscribe"  onClick={() => clear()} data-bs-toggle="modal" data-bs-target="#exampleModal" className="subscribeBtn">Subscribe</button>
                         </div>
                     </div>
                 </div>
@@ -169,8 +174,17 @@ function Dashboard() {
                                         <tr key={i}>
                                             <td>{e.subscriptionName}</td>
                                             <td>{format(e.date, 'yyyy-MM-dd')}</td>
-                                            <td>{e.noSessions} / {e.noSessions}</td>
-                                            <td>{e.transactionId} <i role='button' onClick={() => { navigator.clipboard.writeText(e.transactionId) }}
+                                            <td>{user.availableSessions} / {e.noSessions}</td>
+                                            <td>{e.transactionId} <i role='button' onClick={() => {
+                                                toast('Copied', {
+                                                    theme: 'dark',
+                                                    position: "top-right",
+                                                    hideProgressBar: true,
+                                                    pauseOnHover: false,
+                                                    draggable: false,
+                                                    autoClose: 1000,
+                                                }); navigator.clipboard.writeText(e.transactionId)
+                                            }}
                                                 className="m-0-10 bi bi-copy cursor-pointer"></i> </td>
                                             <td>{e.transactionStatus}</td>
                                             <td>₹&nbsp;{e.amount}</td>
@@ -193,12 +207,19 @@ function Dashboard() {
                                                 </div>
                                             </div>
                                             <div className="col-3">
-                                                <h2 className='fs-32 f-w-b'>{e.noSessions}/{e.noSessions}</h2>
+                                                <h2 className='fs-32 f-w-b'>{user.availableSessions} / {e.noSessions}</h2>
                                             </div>
                                         </div>
                                         <div className="row">
                                             <div className="col-9 fs-14 f-w-r">
-                                                {e.transactionId} <i role='button' onClick={() => { navigator.clipboard.writeText(e.transactionId) }}
+                                                {e.transactionId} <i role='button' onClick={() => { toast('Copied', {
+                                                    theme: 'dark',
+                                                    position: "top-right",
+                                                    hideProgressBar: true,
+                                                    pauseOnHover: false,
+                                                    draggable: false,
+                                                    autoClose: 1000,
+                                                }); navigator.clipboard.writeText(e.transactionId) }}
                                                     className="m-0-10 bi bi-copy cursor-pointer"></i>
                                             </div>
                                             <div className="col-3  fs-14 fw-300">₹&nbsp;{e.amount}</div>

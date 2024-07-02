@@ -8,6 +8,7 @@ import { collection, addDoc, getDoc, query, getDocs, where, doc, setDoc, documen
 import { format } from 'date-fns';
 import Loader from './loader';
 import Footer from './footer';
+import { toast } from 'react-toastify';
 
 function UserDetailView() {
     const [list, setList] = useState([]);
@@ -41,7 +42,7 @@ function UserDetailView() {
 
 
     function signOut() {
-        localStorage.clear();
+        localStorage.remove('admin');
     }
 
     const getList = async (id) => {
@@ -88,7 +89,7 @@ function UserDetailView() {
             <div className="dashboard">
                 <Loader isLoad={load} />
 
-                <nav className="navbar navbar-expand-lg navbar-dark bg-dark bg-black">
+                <nav className="navbar navbar-expand-lg navbar-dark bg-dark bg-black p-0">
                     <div className="container-fluid">
                         <Link className="navbar-brand" to='/admin-dashboard'><img src={logo} alt="" className="nav-logo-img" /></Link>
                         <span className="navbar-text nav-avatar">
@@ -140,7 +141,16 @@ function UserDetailView() {
                                             <td>{e.subscriptionName}</td>
                                             <td>{format(e.date, 'yyyy-MM-dd')}</td>
                                             <td>{e.noSessions} / {e.noSessions}</td>
-                                            <td>{e.transactionId} <i role='button' onClick={() => { navigator.clipboard.writeText(e.transactionId) }}
+                                            <td>{e.transactionId} <i role='button' onClick={() => {
+                                                toast('Copied', {
+                                                    theme: 'dark',
+                                                    position: "top-right",
+                                                    hideProgressBar: true,
+                                                    pauseOnHover: false,
+                                                    draggable: false,
+                                                    autoClose: 1000,
+                                                }); navigator.clipboard.writeText(e.transactionId)
+                                            }}
                                                 className="m-0-10 bi bi-copy cursor-pointer"></i></td>
                                             <td>{e.transactionStatus}</td>
                                             <td>{e.amount}</td>
@@ -168,7 +178,16 @@ function UserDetailView() {
                                         </div>
                                         <div className="row my-2">
                                             <div className="col-9 fs-14 f-w-r">
-                                                {e.transactionId} <i role='button' onClick={() => { navigator.clipboard.writeText(e.transactionId) }}
+                                                {e.transactionId} <i role='button' onClick={() => {
+                                                    toast('Copied', {
+                                                        theme: 'dark',
+                                                        position: "top-right",
+                                                        hideProgressBar: true,
+                                                        pauseOnHover: false,
+                                                        draggable: false,
+                                                        autoClose: 1000,
+                                                    }); navigator.clipboard.writeText(e.transactionId)
+                                                }}
                                                     className="m-0-10 bi bi-copy cursor-pointer"></i>
                                             </div>
                                             <div className="col-3  fs-14 fw-300">₹&nbsp;{e.amount}</div>
