@@ -14,7 +14,7 @@ function Dashboard() {
     const navigate = useNavigate();
     const [user, setUser] = useState('')
     const [list, setList] = useState([]);
-    const [isSubscribe, setIsSubscribe] = useState(true);
+    const [isSubscribe, setIsSubscribe] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     var totalPages = 0;
     var [count, setCount] = useState(0);

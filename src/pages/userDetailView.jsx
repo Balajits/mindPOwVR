@@ -1,7 +1,7 @@
 import { react, useEffect, useState } from 'react';
 import { useLocation, Link, useNavigate, useParams } from 'react-router-dom';
 import { auth, db } from '../config/firebaseConfig';
-import logo from '../assets/images/logo.png';
+import logo from '../assets/images/adminlogo.png';
 import '../dashboard.css';
 import ResponsivePagination from 'react-responsive-pagination';
 import { collection, addDoc, getDoc, query, getDocs, where, doc, setDoc, documentId } from "firebase/firestore";
@@ -42,7 +42,7 @@ function UserDetailView() {
 
 
     function signOut() {
-        localStorage.remove('admin');
+        localStorage.removeItem('admin');
     }
 
     const getList = async (id) => {
@@ -91,7 +91,7 @@ function UserDetailView() {
 
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark bg-black p-0">
                     <div className="container-fluid">
-                        <Link className="navbar-brand" to='/admin-dashboard'><img src={logo} alt="" className="nav-logo-img" /></Link>
+                        <Link className="navbar-brand" to='/admin-dashboard'><img src={logo} alt="" className="nav-logo-img-admin" /></Link>
                         <span className="navbar-text nav-avatar">
                             <div className="dropdown">
                                 <button className="btn btn-secondary dropdown-toggle nav-btn user-btn" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
