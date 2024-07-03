@@ -207,7 +207,7 @@ function Dashboard() {
                                                 </div>
                                             </div>
                                             <div className="col-3">
-                                                <h2 className='fs-32 f-w-b'>{user.availableSessions} / {e.noSessions}</h2>
+                                                <h2 className='fs-32 f-w-b'>{i == 0 ? user.availableSessions : 0} / {e.noSessions}</h2>
                                             </div>
                                         </div>
                                         <div className="row">
