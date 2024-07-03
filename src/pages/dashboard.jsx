@@ -48,7 +48,7 @@ function Dashboard() {
         querySnapshot.forEach((doc) => {
             if (Object.keys(doc.data()).length !== 0 || Array.isArray(doc.data().list)) {
                 // console.log(doc.data().list);
-                setList(doc.data().list.reverse());
+                setList(doc.data().list);
             }
         });
         setLoad(false);
