@@ -140,7 +140,7 @@ function UserDetailView() {
                                         <tr key={i}>
                                             <td>{e.subscriptionName}</td>
                                             <td>{format(e.date, 'yyyy-MM-dd')}</td>
-                                            <td>{e.noSessions} / {e.noSessions}</td>
+                                            <td>{i == 0 ? userData.availableSessions: 0} / {e.noSessions}</td>
                                             <td>{e.transactionId} <i role='button' onClick={() => {
                                                 toast('Copied', {
                                                     theme: 'dark',
@@ -173,7 +173,7 @@ function UserDetailView() {
                                                 </div>
                                             </div>
                                             <div className="col-3">
-                                                <h2 className='fs-32 f-w-b'>{e.noSessions}/{e.noSessions}</h2>
+                                                <h2 className='fs-32 f-w-b'>{i == 0 ? userData.availableSessions: 0} / {e.noSessions}</h2>
                                             </div>
                                         </div>
                                         <div className="row my-2">
